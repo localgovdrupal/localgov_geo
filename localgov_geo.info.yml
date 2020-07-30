@@ -9,5 +9,6 @@ dependencies:
   - geocoder:geocoder
   - geocoder:geocoder_field
   - geofield_map:geofield_map
+  - leaflet:leaflet
   - address:address
 configure: entity.localgov_geo_type.collection

@@ -9,6 +9,7 @@
     "drupal/geofield_map": "^2.66",
     "drupal/geocoder": "^3.7",
     "drupal/address": "^1.8",
-    "drupal/leaflet": "^2.0"
+    "drupal/leaflet": "^2.0",
+    "geocoder-php/nominatim-provider": "^5.2"
   }
 }
