@@ -1,0 +1,14 @@
+{
+  "name": "localgovdrupal/localgov_geo",
+  "type": "drupal-module",
+  "description": "LocalGov Drupal Geo integration",
+  "homepage": "https://github.com/localgovdrupal/localgov_geo",
+  "license": "GPL-2.0-or-later",
+  "require": {
+    "drupal/geofield": "^1.15",
+    "drupal/geofield_map": "^2.66",
+    "drupal/geocoder": "^3.7",
+    "drupal/address": "^1.8",
+    "drupal/leaflet": "^2.0"
+  }
+}
