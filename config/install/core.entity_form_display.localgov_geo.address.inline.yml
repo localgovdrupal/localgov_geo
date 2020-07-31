@@ -29,14 +29,14 @@ content:
     weight: 0
     settings:
       map_geocoder:
-        control: '1'
+        control: 1
         settings:
           providers:
             localgov_default_osm:
-              checked: '1'
-              weight: '0'
-          min_terms: '4'
-          delay: '800'
+              checked: true
+              weight: 0
+          min_terms: 4
+          delay: 800
           options: ''
       map_google_places:
         places_additional_options: ''
