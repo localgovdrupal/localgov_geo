@@ -1,0 +1,24 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall functions for the localgov_geo module.
+ */
+
+use Drupal\user\RoleInterface;
+
+/**
+ * Implements hook_install().
+ */
+function localgov_geo_install() {
+  // So node.module says don't do this. Media then just does it.
+  // Working assumption here is that exposing geo information is the intention.
+  // Otherwise we could push this into the localgov profile. However, it not
+  // obviously would break things for people installing Directories without
+  // the profile. Like even search api indexes what anonymous can see so you
+  // don't get the location is the search results.
+  if (\Drupal::moduleHandler()->moduleExists('user')) {
+    user_role_grant_permissions(RoleInterface::ANONYMOUS_ID, ['view geo']);
+    user_role_grant_permissions(RoleInterface::AUTHENTICATED_ID, ['view geo']);
+  }
+}
