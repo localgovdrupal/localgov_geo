@@ -19,9 +19,6 @@
             "drupal/core": "-p2"
         },
         "patches": {
-            "drupal/geofield_map": {
-                "Fix schema #3162617": "https://www.drupal.org/files/issues/2020-07-31/map-geocoder-schema-3162617-1.patch"
-            },
             "drupal/leaflet": {
                 "Fix schema #2883700": "https://www.drupal.org/files/issues/2020-07-31/leaflet-schema-288370-6.patch"
             }
