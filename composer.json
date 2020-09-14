@@ -20,8 +20,7 @@
         },
         "patches": {
             "drupal/leaflet": {
-                "Fix schema #2883700": "https://www.drupal.org/files/issues/2020-07-31/leaflet-schema-288370-6.patch",
-                "Fix schema in leaflet_view #2883700": "https://www.drupal.org/files/issues/2020-09-14/leaflet-schema-2883700-10.patch"
+                "Fix config schema in leaflet and leaflet_views #2883700": "https://www.drupal.org/files/issues/2020-09-14/leaflet-fix-config-schema-2883700-13.patch"
             }
         }
     }
