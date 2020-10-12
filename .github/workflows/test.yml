@@ -25,6 +25,7 @@ jobs:
         run: |
           composer --working-dir=html config repositories.1 vcs git@github.com:${{ github.repository }}.git
           composer global config github-oauth.github.com ${{ github.token }}
+
       - name: Extract Git branch name outside of a pull request
         if: github.event_name != 'pull_request'
         run: echo "::set-env name=GIT_BRANCH::${GITHUB_REF#refs/heads/}"
