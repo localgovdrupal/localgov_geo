@@ -5,12 +5,16 @@
  * Provides a geo entity type.
  */
 
+use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Render\Element;
+use Drupal\Core\Site\Settings;
+use Drupal\field\FieldConfigInterface;
 
 /**
  * Implements hook_theme().
  */
-function localgov_geo_theme() {
+function localgov_geo_theme()
+{
   return [
     'localgov_geo' => [
       'render element' => 'elements',
@@ -29,8 +33,45 @@ function localgov_geo_theme() {
  *     fields attached to the entity.
  *   - attributes: HTML attributes for the containing element.
  */
-function template_preprocess_localgov_geo(array &$variables) {
+function template_preprocess_localgov_geo(array &$variables)
+{
   foreach (Element::children($variables['elements']) as $key) {
     $variables['content'][$key] = $variables['elements'][$key];
   }
+}
+
+/**
+ * Implements hook_field_widget_form_alter().
+ */
+function localgov_geo_field_widget_form_alter(&$element, FormStateInterface $form_state, $context)
+{
+  /** @var \Drupal\Core\Field\FieldItemListInterface $context ['items'] */
+  $field_config = $context['items']->getFieldDefinition();
+  /** @var \Drupal\Core\Field\FieldConfigInterface $field_config */
+  if (!$field_config instanceof FieldConfigInterface) {
+    // Only configurable fields are subject of geocoding.
+    return;
+  }
+
+  $geocoder = $field_config->getThirdPartySettings('geocoder_field');
+  if (isset($geocoder['method']) && $geocoder['method'] == 'prepopulate_from_source' && isset($geocoder['geocode']['field'])) {
+    // @todo
+    // This is a blunt measure that should be done better.
+    // Removes the additional geocode field for finding a point when
+    // the prepopulate from address is in use. Without it in the
+    // config it defaults to a google map.
+    // So some bug fix and reconfiguration desired there.
+    $element['#after_build'][] = '_localgov_geo_geofield_widget_alter';
+  }
+}
+
+/**
+ * After build geofield_map element.
+ *
+ * @see localgov_geo_field_widget_form_alter()
+ */
+function _localgov_geo_geofield_widget_alter($element)
+{
+  unset($element['value']['map']['geocode']);
+  return $element;
 }

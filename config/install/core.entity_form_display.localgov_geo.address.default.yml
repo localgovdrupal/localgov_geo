@@ -1,3 +1,4 @@
+uuid: 3e382f9a-c2d2-4053-a94e-e6b1146c9c53
 langcode: en
 status: true
 dependencies:
@@ -11,6 +12,8 @@ dependencies:
     - address
     - geofield_map
     - text
+_core:
+  default_config_hash: 0t_A5wer7mDPKObtEtW4vM4IQr6DTf1-LJy3KAwmTxE
 id: localgov_geo.address.default
 targetEntityType: localgov_geo
 bundle: address
