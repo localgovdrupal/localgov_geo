@@ -44,9 +44,9 @@ function localgov_geo_theme_suggestions_localgov_geo(array $variables) {
   $geo = $variables['elements']['#localgov_geo'];
   $sanitized_view_mode = strtr($variables['elements']['#view_mode'], '.', '_');
 
-  $suggestions[] = 'localgov-geo__' . $sanitized_view_mode;
-  $suggestions[] = 'localgov-geo__' . $geo->bundle();
-  $suggestions[] = 'localgov-geo__' . $geo->bundle() . '__' . $sanitized_view_mode;
+  $suggestions[] = 'localgov_geo__' . $sanitized_view_mode;
+  $suggestions[] = 'localgov_geo__' . $geo->bundle();
+  $suggestions[] = 'localgov_geo__' . $geo->bundle() . '__' . $sanitized_view_mode;
 
   return $suggestions;
 }
