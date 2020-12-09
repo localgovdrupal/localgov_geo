@@ -7,14 +7,12 @@
 
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Render\Element;
-use Drupal\Core\Site\Settings;
 use Drupal\field\FieldConfigInterface;
 
 /**
  * Implements hook_theme().
  */
-function localgov_geo_theme()
-{
+function localgov_geo_theme() {
   return [
     'localgov_geo' => [
       'render element' => 'elements',
@@ -33,8 +31,7 @@ function localgov_geo_theme()
  *     fields attached to the entity.
  *   - attributes: HTML attributes for the containing element.
  */
-function template_preprocess_localgov_geo(array &$variables)
-{
+function template_preprocess_localgov_geo(array &$variables) {
   foreach (Element::children($variables['elements']) as $key) {
     $variables['content'][$key] = $variables['elements'][$key];
   }
@@ -43,8 +40,7 @@ function template_preprocess_localgov_geo(array &$variables)
 /**
  * Implements hook_field_widget_form_alter().
  */
-function localgov_geo_field_widget_form_alter(&$element, FormStateInterface $form_state, $context)
-{
+function localgov_geo_field_widget_form_alter(&$element, FormStateInterface $form_state, $context) {
   /** @var \Drupal\Core\Field\FieldItemListInterface $context ['items'] */
   $field_config = $context['items']->getFieldDefinition();
   /** @var \Drupal\Core\Field\FieldConfigInterface $field_config */
@@ -70,8 +66,23 @@ function localgov_geo_field_widget_form_alter(&$element, FormStateInterface $for
  *
  * @see localgov_geo_field_widget_form_alter()
  */
-function _localgov_geo_geofield_widget_alter($element)
-{
+function _localgov_geo_geofield_widget_alter($element) {
   unset($element['value']['map']['geocode']);
   return $element;
+}
+
+/**
+ * Implements hook_theme_suggestions_HOOK().
+ */
+function localgov_geo_theme_suggestions_localgov_geo(array $variables) {
+  $suggestions = [];
+
+  $geo = $variables['elements']['#localgov_geo'];
+  $sanitized_view_mode = strtr($variables['elements']['#view_mode'], '.', '_');
+
+  $suggestions[] = 'localgov_geo__' . $sanitized_view_mode;
+  $suggestions[] = 'localgov_geo__' . $geo->bundle();
+  $suggestions[] = 'localgov_geo__' . $geo->bundle() . '__' . $sanitized_view_mode;
+
+  return $suggestions;
 }
