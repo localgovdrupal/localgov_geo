@@ -34,3 +34,19 @@ function template_preprocess_localgov_geo(array &$variables) {
     $variables['content'][$key] = $variables['elements'][$key];
   }
 }
+
+/**
+ * Implements hook_theme_suggestions_HOOK().
+ */
+function localgov_geo_theme_suggestions_localgov_geo(array $variables) {
+  $suggestions = [];
+
+  $geo = $variables['elements']['#localgov_geo'];
+  $sanitized_view_mode = strtr($variables['elements']['#view_mode'], '.', '_');
+
+  $suggestions[] = 'localgov_geo__' . $sanitized_view_mode;
+  $suggestions[] = 'localgov_geo__' . $geo->bundle();
+  $suggestions[] = 'localgov_geo__' . $geo->bundle() . '__' . $sanitized_view_mode;
+
+  return $suggestions;
+}
