@@ -4,6 +4,12 @@
     "description": "LocalGov Drupal Geo integration",
     "homepage": "https://github.com/localgovdrupal/localgov_geo",
     "license": "GPL-2.0-or-later",
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://git.drupalcode.org/issue/geocoder_ajax_prepopulate-3182650.git"
+        }
+    ],
     "require": {
         "drupal/geofield": "^1.15",
         "drupal/geofield_map": "^2.66",
