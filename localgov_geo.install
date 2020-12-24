@@ -6,6 +6,8 @@
  */
 
 use Drupal\user\RoleInterface;
+use Drupal\Core\Field\BaseFieldDefinition;
+use Drupal\localgov_geo\Entity\LocalgovGeo;
 
 /**
  * Implements hook_install().
@@ -21,4 +23,75 @@ function localgov_geo_install() {
     user_role_grant_permissions(RoleInterface::ANONYMOUS_ID, ['view geo']);
     user_role_grant_permissions(RoleInterface::AUTHENTICATED_ID, ['view geo']);
   }
+}
+
+/**
+ * Add label and configure defaults for label field.
+ */
+function localgov_geo_update_8001() {
+  // Add label field to the geo entity.
+  $field_storage_definition = BaseFieldDefinition::create('string')
+    ->setLabel(t('Label'))
+    ->setDescription(t('Short human identification or description.'))
+    ->setRequired(TRUE)
+    ->setTranslatable(TRUE)
+    ->setRevisionable(TRUE)
+    ->setSetting('max_length', 1020)
+    ->setDisplayOptions('view', [
+      'label' => 'hidden',
+      'type' => 'string',
+      'weight' => -5,
+    ])
+    ->setDisplayOptions('form', [
+      'type' => 'string_textfield',
+      'weight' => -5,
+      'region' => 'hidden',
+    ])
+    ->setDisplayConfigurable('form', TRUE);
+
+  \Drupal::entityDefinitionUpdateManager()
+    ->installFieldStorageDefinition('label', 'localgov_geo', 'localgov_geo', $field_storage_definition);
+
+  // Add field for default label token replacement on bundle.
+  $config_factory = \Drupal::configFactory();
+  foreach ($config_factory->listAll('localgov_geo.localgov_geo_type.') as $bundle_config_name) {
+    $token = ($bundle_config_name == 'localgov_geo.localgov_geo_type.address') ? '[localgov_geo:postal_address]' : '[localgov_geo:id]';
+    $geo_bundle = $config_factory->getEditable($bundle_config_name);
+    $geo_bundle->set('label_token', $token);
+    $geo_bundle->save();
+  }
+
+}
+
+/**
+ * Update all existing localgov_geo enties for new label field.
+ */
+function localgov_geo_update_8002(&$sandbox) {
+  if (!isset($sandbox['total'])) {
+     $sandbox['total'] = \Drupal::entityQuery('localgov_geo')->count()->execute();
+     $sandbox['current'] = 0;
+   }
+
+   $ids = \Drupal::entityQuery('localgov_geo')
+     ->range($sandbox['current'], 50)
+     ->execute();
+   if (empty($ids)) {
+     $sandbox['#finished'] = 1;
+     return;
+   }
+
+   foreach($ids as $id) {
+     $geo = LocalgovGeo::load($id);
+     $geo->save();
+     $sandbox['current']++;
+   }
+
+   \Drupal::messenger()
+     ->addMessage($sandbox['current'] . ' geo entities processed.');
+
+   if ($sandbox['current'] >= $sandbox['total']) {
+     $sandbox['#finished'] = 1;
+   } else {
+     $sandbox['#finished'] = ($sandbox['current'] / $sandbox['total']);
+   }
 }

@@ -14,4 +14,5 @@ dependencies:
   - leaflet:leaflet
   - address:address
   - geocoder_ajax_prepopulate:geocoder_ajax_prepopulate
+  - token:token
 configure: entity.localgov_geo_type.collection
