@@ -58,7 +58,6 @@ content:
         focus: 12
         min: 0
         max: 22
-      hide_coordinates: true
       geoaddress_field:
         field: '0'
         disabled: true
@@ -68,6 +67,7 @@ content:
         lon: !!float 0
       click_to_find_marker: false
       click_to_place_marker: false
+      hide_coordinates: false
       html5_geolocation: false
       map_google_api_key: ''
       zoom_level: 5
@@ -99,3 +99,4 @@ content:
     third_party_settings: {  }
 hidden:
   external_id: true
+  label: true

@@ -68,30 +68,43 @@ function localgov_geo_update_8001() {
  */
 function localgov_geo_update_8002(&$sandbox) {
   if (!isset($sandbox['total'])) {
-     $sandbox['total'] = \Drupal::entityQuery('localgov_geo')->count()->execute();
-     $sandbox['current'] = 0;
-   }
+    $sandbox['total'] = \Drupal::entityQuery('localgov_geo')->count()->execute();
+    $sandbox['current'] = 0;
+  }
 
-   $ids = \Drupal::entityQuery('localgov_geo')
-     ->range($sandbox['current'], 50)
-     ->execute();
-   if (empty($ids)) {
-     $sandbox['#finished'] = 1;
-     return;
-   }
+  $ids = \Drupal::entityQuery('localgov_geo')
+    ->range($sandbox['current'], 50)
+    ->execute();
+  if (empty($ids)) {
+    $sandbox['#finished'] = 1;
+    return;
+  }
 
-   foreach($ids as $id) {
-     $geo = LocalgovGeo::load($id);
-     $geo->save();
-     $sandbox['current']++;
-   }
+  foreach ($ids as $id) {
+    $geo = LocalgovGeo::load($id);
+    $geo->save();
+    $sandbox['current']++;
+  }
 
-   \Drupal::messenger()
-     ->addMessage($sandbox['current'] . ' geo entities processed.');
+  \Drupal::messenger()
+    ->addMessage($sandbox['current'] . ' geo entities processed.');
 
-   if ($sandbox['current'] >= $sandbox['total']) {
-     $sandbox['#finished'] = 1;
-   } else {
-     $sandbox['#finished'] = ($sandbox['current'] / $sandbox['total']);
-   }
+  if ($sandbox['current'] >= $sandbox['total']) {
+    $sandbox['#finished'] = 1;
+  }
+  else {
+    $sandbox['#finished'] = ($sandbox['current'] / $sandbox['total']);
+  }
+}
+
+/**
+ * Set localgov_geo_address submodule as enabled.
+ */
+function localgov_geo_update_8003() {
+  $extension_config = \Drupal::configFactory()->getEditable('core.extension');
+  $extension_config
+    ->set("module.localgov_geo_address", 0)
+    ->set('module', module_config_sort($extension_config->get('module')))
+    ->save(TRUE);
+  drupal_set_installed_schema_version('localgov_geo_address', 0);
 }
