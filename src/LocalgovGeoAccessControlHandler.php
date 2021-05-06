@@ -19,13 +19,24 @@ class LocalgovGeoAccessControlHandler extends EntityAccessControlHandler {
 
     switch ($operation) {
       case 'view':
-        return AccessResult::allowedIfHasPermission($account, 'view geo');
+        return AccessResult::allowedIfHasPermission(
+          $account,
+          'view geo'
+        );
 
       case 'update':
-        return AccessResult::allowedIfHasPermissions($account, ['edit geo', 'administer geo'], 'OR');
+        return AccessResult::allowedIfHasPermissions(
+          $account,
+          ['edit geo', 'administer geo'],
+          'OR'
+        );
 
       case 'delete':
-        return AccessResult::allowedIfHasPermissions($account, ['delete geo', 'administer geo'], 'OR');
+        return AccessResult::allowedIfHasPermissions(
+          $account,
+          ['delete geo', 'administer geo'],
+          'OR'
+        );
 
       default:
         // No opinion.
@@ -38,7 +49,11 @@ class LocalgovGeoAccessControlHandler extends EntityAccessControlHandler {
    * {@inheritdoc}
    */
   protected function checkCreateAccess(AccountInterface $account, array $context, $entity_bundle = NULL) {
-    return AccessResult::allowedIfHasPermissions($account, ['create geo', 'administer geo'], 'OR');
+    return AccessResult::allowedIfHasPermissions(
+      $account,
+      ['create geo', 'administer geo'],
+      'OR'
+    );
   }
 
 }
