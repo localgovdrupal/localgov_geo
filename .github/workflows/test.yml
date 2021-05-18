@@ -41,11 +41,11 @@ jobs:
           echo "GIT_BRANCH=${GITHUB_HEAD_REF}" >> $GITHUB_ENV
           echo "GIT_REPO=${{ github.event.pull_request.head.repo.full_name }}" >> $GITHUB_ENV
   
-      - name: Set composer branch reference for main version branches
+      - name: Set composer branch reference for version branches
         if: endsWith(github.ref, '.x')
         run: echo "COMPOSER_REF=${GIT_BRANCH}-dev" >> $GITHUB_ENV
           
-      - name: Set composer branch reference for main version branches
+      - name: Set composer branch reference for non-version branches
         if: endsWith(github.ref, '.x') == false
         run: echo "COMPOSER_REF=dev-${GIT_BRANCH}" >> $GITHUB_ENV
 
