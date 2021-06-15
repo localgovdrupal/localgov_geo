@@ -11,7 +11,7 @@ use Drupal\Tests\BrowserTestBase;
  *
  * @group localgov_geo
  */
-class AddressFormsTestTest extends BrowserTestBase {
+class AddressFormsTest extends BrowserTestBase {
 
   /**
    * Set to TRUE to strict check all configuration saved.

@@ -10,7 +10,7 @@ use Drupal\Tests\BrowserTestBase;
  *
  * @group localgov_geo
  */
-class GeoTypeCreationTest extends BrowserTestBase {
+class GeoBundleCreationTest extends BrowserTestBase {
 
   /**
    * {@inheritdoc}
