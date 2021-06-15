@@ -17,6 +17,7 @@
         "drupal/address": "^1.8",
         "drupal/leaflet": "^2.0",
         "geocoder-php/nominatim-provider": "^5.2",
-	"drupal/geocoder_ajax_prepopulate": "dev-3182650-inline-entity-form"
+	"drupal/geocoder_ajax_prepopulate": "dev-3182650-inline-entity-form",
+	"drupal/entity_browser": "^2.5"
     }
 }

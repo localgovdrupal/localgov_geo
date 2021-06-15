@@ -9,4 +9,7 @@ dependencies:
   - geofield_map:geofield_map
   - leaflet:leaflet
   - token:token
+  - entity_browser:entity_browser_entity_form
+  - drupal:views
+  - entity_browser:entity_browser
 configure: entity.localgov_geo_type.collection
