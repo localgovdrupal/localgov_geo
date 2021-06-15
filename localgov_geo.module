@@ -5,6 +5,7 @@
  * Provides a geo entity type.
  */
 
+use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Render\Element;
 
 /**
@@ -49,4 +50,25 @@ function localgov_geo_theme_suggestions_localgov_geo(array $variables) {
   $suggestions[] = 'localgov_geo__' . $geo->bundle() . '__' . $sanitized_view_mode;
 
   return $suggestions;
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ *
+ * This removes entity forms if the bundle is not enabled for the field.
+ * There are a few patches in the issue queue to remove the need to do this.
+ * The most promising:
+ *   https://www.drupal.org/project/entity_browser/issues/2765295
+ */
+function localgov_geo_form_entity_browser_localgov_geo_library_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+  $storage = $form_state->getStorage();
+  $bundles = $storage['entity_browser']['widget_context']['target_bundles'];
+  // UUIDs are defined by the configuration we're installing.
+  // @see config/install/entity_browser.browser.localgov_geo_library.yml
+  if (empty($bundles['address'])) {
+    unset($form['widget_selector']['tab_selector_3edf0a0f-cb61-4324-8d36-1898e23a16ed']);
+  }
+  if (empty($bundles['area'])) {
+    unset($form['widget_selector']['tab_selector_beda8d11-9000-4069-95e7-dbb4282941db']);
+  }
 }
