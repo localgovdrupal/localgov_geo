@@ -6,9 +6,7 @@ core: 8.x
 core_version_requirement: ^8 || ^9
 dependencies:
   - geofield:geofield
-  - geocoder:geocoder
-  - geocoder:geocoder_field
   - geofield_map:geofield_map
   - leaflet:leaflet
-  - address:address
+  - token:token
 configure: entity.localgov_geo_type.collection

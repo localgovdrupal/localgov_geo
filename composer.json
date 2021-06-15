@@ -4,12 +4,19 @@
     "description": "LocalGov Drupal Geo integration",
     "homepage": "https://github.com/localgovdrupal/localgov_geo",
     "license": "GPL-2.0-or-later",
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://git.drupalcode.org/issue/geocoder_ajax_prepopulate-3182650.git"
+        }
+    ],
     "require": {
         "drupal/geofield": "^1.15",
         "drupal/geofield_map": "^2.66",
         "drupal/geocoder": "^3.7",
         "drupal/address": "^1.8",
         "drupal/leaflet": "^2.0",
-        "geocoder-php/nominatim-provider": "^5.2"
+        "geocoder-php/nominatim-provider": "^5.2",
+	"drupal/geocoder_ajax_prepopulate": "dev-3182650-inline-entity-form"
     }
 }
