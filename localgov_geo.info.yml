@@ -6,9 +6,10 @@ core: 8.x
 core_version_requirement: ^8 || ^9
 dependencies:
   - geofield:geofield
-  - geocoder:geocoder
-  - geocoder:geocoder_field
   - geofield_map:geofield_map
   - leaflet:leaflet
-  - address:address
+  - token:token
+  - entity_browser:entity_browser_entity_form
+  - drupal:views
+  - entity_browser:entity_browser
 configure: entity.localgov_geo_type.collection

@@ -1,0 +1,7 @@
+uuid: 6593dffd-d6cc-4b16-8cf1-c863446d8b46
+langcode: en
+status: true
+dependencies: {  }
+id: area
+label: Area
+label_token: ''
