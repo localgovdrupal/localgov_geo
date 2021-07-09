@@ -39,6 +39,7 @@ use Drupal\Core\Config\Entity\ConfigEntityBundleBase;
  *     "id",
  *     "label",
  *     "uuid",
+ *     "label_token",
  *   }
  * )
  */
@@ -57,5 +58,19 @@ class LocalgovGeoType extends ConfigEntityBundleBase {
    * @var string
    */
   protected $label;
+
+  /**
+   * The token string to use to replace for entity label default.
+   *
+   * @var string
+   */
+  protected $label_token;
+
+  /**
+   * Return the label token.
+   */
+  public function labelToken() {
+    return $this->label_token;
+  }
 
 }
