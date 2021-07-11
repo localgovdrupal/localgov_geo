@@ -5,13 +5,33 @@ dependencies:
     - field.storage.localgov_geo.location
     - localgov_geo.localgov_geo_type.address
   module:
+    - geocoder_field
     - geofield
+third_party_settings:
+  geocoder_field:
+    method: prepopulate_from_source
+    weight: 0
+    geocode:
+      field: postal_address
+      delta_handling: default
+    skip_not_empty_value: false
+    disabled: false
+    hidden: false
+    providers:
+      - localgov_default_osm
+    dumper: wkt
+    failure:
+      handling: preserve
+      status_message: true
+      log: true
+    field: postal_address
+    delta_handling: default
 id: localgov_geo.address.location
 field_name: location
 entity_type: localgov_geo
 bundle: address
 label: location
-description: ''
+description: 'If the point lookup up on pressing the ''Populate from Address field'' button isn''t in the correct location you can move it manually.'
 required: true
 translatable: false
 default_value: {  }
