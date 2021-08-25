@@ -17,11 +17,7 @@ class AddressFormsTest extends BrowserTestBase {
    * Set to TRUE to strict check all configuration saved.
    *
    * @var bool
-   *
-   * @todo Drupal\Tests\localgov_geo_address\Functional\AddressFormsTestTest::testCrud
-Drupal\Core\Config\Schema\SchemaIncompleteException: Schema errors for field.field.localgov_geo.address.location with the following errors: field.field.localgov_geo.address.location:third_party_settings.geocoder_field.geocode missing schema
    */
-  protected $strictConfigSchema = FALSE;
 
   /**
    * {@inheritdoc}
@@ -34,7 +30,6 @@ Drupal\Core\Config\Schema\SchemaIncompleteException: Schema errors for field.fie
     'localgov_geo_address',
     'token',
     'geocoder',
-    'geocoder_ajax_prepopulate',
     'geofield_map',
   ];
 
@@ -103,8 +98,8 @@ Drupal\Core\Config\Schema\SchemaIncompleteException: Schema errors for field.fie
 
     // Saved new enity.
     $assert_session->responseContains(Html::escape("$line_1") . "<br />\n" . Html::Escape($locality) . "<br />\n$post_code");
-    $assert_session->pageTextContains('52.123456');
-    $assert_session->pageTextContains('0.987654');
+    $assert_session->responseContains('52.123456');
+    $assert_session->responseContains('0.987654');
     $assert_session->pageTextContains('New geo');
 
     // Token generated label.

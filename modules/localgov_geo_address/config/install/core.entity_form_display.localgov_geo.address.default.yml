@@ -8,8 +8,8 @@ dependencies:
     - field.field.localgov_geo.address.postal_address
     - localgov_geo.localgov_geo_type.address
   module:
-    - address
     - geofield_map
+    - localgov_geo_address
     - text
 id: localgov_geo.address.default
 targetEntityType: localgov_geo
@@ -34,15 +34,15 @@ content:
     weight: 1
     settings:
       map_geocoder:
-        control: 1
         settings:
           providers:
             localgov_default_osm:
-              checked: true
               weight: 0
+              checked: false
           min_terms: 4
           delay: 800
           options: ''
+        control: 0
       map_google_places:
         places_additional_options: ''
         places_control: false
@@ -76,9 +76,14 @@ content:
     region: content
   postal_address:
     weight: 0
-    settings: {  }
+    settings:
+      providers:
+        localgov_default_osm:
+          checked: true
+          weight: 0
+      geocode_geofield: location
     third_party_settings: {  }
-    type: address_default
+    type: localgov_geo_address
     region: content
   status:
     type: boolean_checkbox
