@@ -8,6 +8,7 @@
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Render\Element;
 use Drupal\field\FieldConfigInterface;
+use Drupal\views\ViewExecutable;
 
 /**
  * Implements hook_theme().
@@ -105,5 +106,14 @@ function localgov_geo_form_entity_browser_localgov_geo_library_form_alter(&$form
   }
   if (empty($bundles['area'])) {
     unset($form['widget_selector']['tab_selector_beda8d11-9000-4069-95e7-dbb4282941db']);
+  }
+}
+
+/**
+ * Implements hook_views_pre_render().
+ */
+function localgov_geo_views_pre_render(ViewExecutable $view) {
+  if ($view->id() == 'localgov_geo_library') {
+    $view->element['#attached']['library'][] = 'localgov_geo/geobrowser';
   }
 }
