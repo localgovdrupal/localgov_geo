@@ -94,6 +94,11 @@
 
   function extractAddressString(addressFieldId) {
     var address = {};
+    $('#' + addressFieldId).find('select').each(function() {
+      selectName = $(this).attr('name');
+      addressPart = selectName.substring(selectName.lastIndexOf('[') + 1, selectName.lastIndexOf(']'));
+      address[addressPart] = this.value;
+    });
     $('#' + addressFieldId).find('input').each(function() {
       address[$(this).data('ui-autocomplete').addressPart] = this.value;
     });
