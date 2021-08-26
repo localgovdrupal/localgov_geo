@@ -9,7 +9,6 @@ use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Entity\RevisionableContentEntityBase;
 use Drupal\Core\Field\BaseFieldDefinition;
 use Drupal\localgov_geo\LocalgovGeoInterface;
-use Drupal\token\Token;
 use Drupal\user\UserInterface;
 
 /**

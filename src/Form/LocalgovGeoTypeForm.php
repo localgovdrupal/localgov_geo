@@ -66,7 +66,6 @@ class LocalgovGeoTypeForm extends BundleEntityFormBase {
       '#token_types' => ['localgov_geo'],
     ];
 
-
     return $this->protectBundleIdElement($form);
   }
 

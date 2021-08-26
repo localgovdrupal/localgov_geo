@@ -41,6 +41,7 @@ class AutocompleteAddress extends Address {
    * @return array
    *   The processed element.
    */
+  // @codingStandardsIgnoreLine compatiblity with Drupal\Core\Render\Element\FormElement::processAutocomplete.
   public static function processAutocomplete(&$element, FormStateInterface $form_state, &$complete_form) {
 
     $access = FALSE;

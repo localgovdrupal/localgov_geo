@@ -113,7 +113,7 @@ class AutocompleteAddress extends AddressDefaultWidget {
   /**
    * Sets the entity field manager service.
    *
-   * @param \Drupal\Core\Entity\EntityFieldManagerInterface $entity_type_manager
+   * @param \Drupal\Core\Entity\EntityFieldManagerInterface $entity_field_manager
    *   The entity field manager service.
    *
    * @return $this
@@ -122,7 +122,6 @@ class AutocompleteAddress extends AddressDefaultWidget {
     $this->entityFieldManager = $entity_field_manager;
     return $this;
   }
-
 
   /**
    * Set the Geocoder Provider Plugin Manager.

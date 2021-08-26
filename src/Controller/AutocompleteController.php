@@ -36,7 +36,7 @@ class AutocompleteController extends ControllerBase {
   /**
    * Constructs an EntityAutocompleteController object.
    *
-   * @param \Drupal\Core\Entity\EntityAutocompleteMatcherInterface $matcher
+   * @param \Drupal\geocoder\GeocoderInterface $geocoder
    *   The autocomplete matcher for entity references.
    * @param \Drupal\Core\KeyValueStore\KeyValueStoreInterface $key_value
    *   The key value factory.
@@ -95,7 +95,8 @@ class AutocompleteController extends ControllerBase {
 
       $address_fields = json_decode($input, TRUE);
       $country = $address_fields['country_code'];
-      $language = $address_fields['langcode'];
+      // Also available if can be passed to a geocoder:
+      // $address_fields['langcode'].
       // Maybe worth formatting this. But for the rest of the fields they are in
       // the expected order.
       // Formating see AddressService::addressArrayToGeoString().

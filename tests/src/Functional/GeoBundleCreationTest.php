@@ -85,7 +85,7 @@ class GeoBundleCreationTest extends BrowserTestBase {
 
     $bundle = LocalgovGeoType::load($machine_name);
     $this->assertInstanceOf(LocalgovGeoType::class, $bundle);
-    $this->assertEqual('token [localgov_geo:id]', $bundle->labelToken());
+    $this->assertEquals('token [localgov_geo:id]', $bundle->labelToken());
   }
 
 }
