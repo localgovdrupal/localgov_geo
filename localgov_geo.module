@@ -40,6 +40,10 @@ function template_preprocess_localgov_geo(array &$variables) {
 
 /**
  * Implements hook_field_widget_form_alter().
+ *
+ * @todo @deprecated or remove.
+ *   This was required for one of the previous ways of geocoding. Some sites
+ *   might be using. Won't break with removal - to check.
  */
 function localgov_geo_field_widget_form_alter(&$element, FormStateInterface $form_state, $context) {
   /** @var \Drupal\Core\Field\FieldItemListInterface $context ['items'] */
@@ -59,6 +63,16 @@ function localgov_geo_field_widget_form_alter(&$element, FormStateInterface $for
     // config it defaults to a google map.
     // So some bug fix and reconfiguration desired there.
     $element['#after_build'][] = '_localgov_geo_geofield_widget_alter';
+  }
+}
+
+/**
+ * Implements hook_field_widget_complete_WIDGET_TYPE_form_alter().
+ */
+function localgov_geo_field_widget_complete_entity_browser_entity_reference_form_alter(&$field_widget_complete_form, FormStateInterface $form_state, $context) {
+  if ($context['widget']->getSetting('entity_browser') == 'localgov_geo_library') {
+    $field_widget_complete_form['#attached']['library'][] = 'localgov_geo/geobrowser';
+    $field_widget_complete_form['#attributes']['class'][] = 'localgov-geo-geobrowser';
   }
 }
 
