@@ -100,21 +100,76 @@ function localgov_geo_update_8002(&$sandbox) {
 }
 
 /**
- * Set localgov_geo_address submodule as enabled.
+ * Add the new Geo Entity view modes.
  */
 function localgov_geo_update_8003() {
+  $core_entity_view_mode_localgov_geo_embed_yml = <<<EOY
+langcode: en
+status: true
+dependencies:
+  module:
+    - localgov_geo
+id: localgov_geo.embed
+label: Embed
+targetEntityType: localgov_geo
+cache: true
+EOY;
+  $view_mode = \Drupal::service('config.factory')->getEditable('core.entity_view_mode.localgov_geo.embed');
+  assert($view_mode instanceof Config);
+  if ($view_mode->isNew()) {
+    $view_mode->setData(Yaml::parse($core_entity_view_mode_localgov_geo_embed_yml));
+    $view_mode->save();
+  }
+
+  $core_entity_view_mode_localgov_geo_full_yml = <<<EOY
+langcode: en
+status: true
+dependencies:
+  module:
+    - localgov_geo
+id: localgov_geo.full
+label: Full
+targetEntityType: localgov_geo
+cache: true
+EOY;
+  $view_mode = \Drupal::service('config.factory')->getEditable('core.entity_view_mode.localgov_geo.full');
+  assert($view_mode instanceof Config);
+  if ($view_mode->isNew()) {
+    $view_mode->setData(Yaml::parse($core_entity_view_mode_localgov_geo_full_yml));
+    $view_mode->save();
+  }
+
+}
+
+/**
+ * Enable localgov_geo_address submodule.
+ */
+function localgov_geo_update_8004() {
   $extension_config = \Drupal::configFactory()->getEditable('core.extension');
   $extension_config
     ->set("module.localgov_geo_address", 0)
     ->set('module', module_config_sort($extension_config->get('module')))
     ->save(TRUE);
   drupal_set_installed_schema_version('localgov_geo_address', 0);
+
+  // Copy default view mode to be same as new embed view mode.
+  $default = \Drupal::configFactory()->get('core.entity_view_display.localgov_geo.address.default');
+  $embed = \Drupal::configFactory()->getEditable('core.entity_view_display.localgov_geo.address.embed');
+  if ($embed->isNew()) {
+    $config_array = $default->getRawData();
+    $config_array['dependencies']['config'] = 'core.entity_view_mode.localgov_geo.embed';
+    $config_array['id'] = 'localgov_geo.address.embed';
+    $config_array['mode'] = 'embed';
+    $embed->setData($config_array);
+    $embed->save();
+  }
+
 }
 
 /**
  * Add the new Geo Entity Browser and related view.
  */
-function localgov_geo_update_8004() {
+function localgov_geo_update_8005() {
   $entity_browser_browser_localgov_geo_library_yml = <<<EOY
 langcode: en
 status: true
