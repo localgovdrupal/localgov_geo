@@ -11,5 +11,8 @@
         "drupal/address": "^1.8",
         "drupal/leaflet": "^2.0",
         "geocoder-php/nominatim-provider": "^5.2"
+    },
+    "require-dev": {
+        "localgovdrupal/localgov_core": "^2.1"
     }
 }
