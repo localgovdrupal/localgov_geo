@@ -102,3 +102,22 @@ function localgov_geo_views_pre_render(ViewExecutable $view) {
     $view->element['#attached']['library'][] = 'localgov_geo/geobrowser';
   }
 }
+
+/**
+ * Implements hook_localgov_roles_default().
+ */
+function localgov_geo_localgov_roles_default() {
+  return [
+    // @codingStandardsIgnoreLine
+    \Drupal\localgov_roles\RolesHelper::EDITOR_ROLE => [
+      'access geo overview',
+      'create geo',
+      'delete geo',
+      'edit geo',
+    ],
+    // @codingStandardsIgnoreLine
+    \Drupal\localgov_roles\RolesHelper::AUTHOR_ROLE => [
+      'create geo',
+    ],
+  ];
+}
