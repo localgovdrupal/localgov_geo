@@ -11,6 +11,6 @@
         "drupal/address": "^1.8",
         "drupal/leaflet": "^2.0",
         "geocoder-php/nominatim-provider": "^5.2",
-	"drupal/entity_browser": "^2.5"
+        "drupal/entity_browser": "^2.5"
     }
 }
