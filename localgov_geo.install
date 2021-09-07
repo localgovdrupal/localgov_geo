@@ -38,7 +38,7 @@ function localgov_geo_update_8001() {
     ->setRequired(TRUE)
     ->setTranslatable(TRUE)
     ->setRevisionable(TRUE)
-    ->setSetting('max_length', 1020)
+    ->setSetting('max_length', 1275)
     ->setDisplayOptions('view', [
       'label' => 'hidden',
       'type' => 'string',
@@ -60,7 +60,7 @@ function localgov_geo_update_8001() {
     $token = ($bundle_config_name == 'localgov_geo.localgov_geo_type.address') ? '[localgov_geo:postal_address]' : '[localgov_geo:id]';
     $geo_bundle = $config_factory->getEditable($bundle_config_name);
     $geo_bundle->set('label_token', $token);
-    $geo_bundle->save();
+    $geo_bundle->save(TRUE);
   }
 
 }
@@ -157,7 +157,7 @@ function localgov_geo_update_8004() {
   $embed = \Drupal::configFactory()->getEditable('core.entity_view_display.localgov_geo.address.embed');
   if ($embed->isNew()) {
     $config_array = $default->getRawData();
-    $config_array['dependencies']['config'] = 'core.entity_view_mode.localgov_geo.embed';
+    $config_array['dependencies']['config'][] = 'core.entity_view_mode.localgov_geo.embed';
     $config_array['id'] = 'localgov_geo.address.embed';
     $config_array['mode'] = 'embed';
     $embed->setData($config_array);

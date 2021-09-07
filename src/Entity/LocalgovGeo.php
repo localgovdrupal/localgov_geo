@@ -234,7 +234,7 @@ class LocalgovGeo extends RevisionableContentEntityBase implements LocalgovGeoIn
       ->setRequired(TRUE)
       ->setTranslatable(TRUE)
       ->setRevisionable(TRUE)
-      ->setSetting('max_length', 255)
+      ->setSetting('max_length', 1275)
       ->setDisplayOptions('view', [
         'label' => 'hidden',
         'type' => 'string',
