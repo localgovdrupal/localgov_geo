@@ -4,6 +4,7 @@ dependencies:
   module:
     - localgov_geo
     - text
+    - field
 id: localgov_geo.accessibility
 field_name: accessibility
 entity_type: localgov_geo
