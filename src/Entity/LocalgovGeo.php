@@ -2,6 +2,7 @@
 
 namespace Drupal\localgov_geo\Entity;
 
+use Drupal\Component\Render\PlainTextOutput;
 use Drupal\Core\Entity\EntityChangedTrait;
 use Drupal\Core\Entity\EntityStorageInterface;
 use Drupal\Core\Entity\EntityTypeInterface;
@@ -44,7 +45,7 @@ use Drupal\user\UserInterface;
  *     "revision" = "revision_id",
  *     "langcode" = "langcode",
  *     "bundle" = "bundle",
- *     "label" = "id",
+ *     "label" = "label",
  *     "uuid" = "uuid"
  *   },
  *   revision_metadata_keys = {
@@ -142,6 +143,19 @@ class LocalgovGeo extends RevisionableContentEntityBase implements LocalgovGeoIn
   /**
    * {@inheritdoc}
    */
+  public function presave(EntityStorageInterface $storage) {
+    $token_template = $this->get('bundle')->entity->labelToken();
+    if (!empty($token_template)) {
+      $token_service = \Drupal::token();
+      $label_html = $token_service->replace($token_template, ['localgov_geo' => $this]);
+      $this->set('label', PlainTextOutput::renderFromHtml($label_html));
+    }
+    parent::preSave($storage);
+  }
+
+  /**
+   * {@inheritdoc}
+   */
   public static function baseFieldDefinitions(EntityTypeInterface $entity_type) {
 
     $fields = parent::baseFieldDefinitions($entity_type);
@@ -213,6 +227,25 @@ class LocalgovGeo extends RevisionableContentEntityBase implements LocalgovGeoIn
       ->setLabel(t('Changed'))
       ->setTranslatable(TRUE)
       ->setDescription(t('The time that the geo was last edited.'));
+
+    $fields['label'] = BaseFieldDefinition::create('string')
+      ->setLabel(t('Label'))
+      ->setDescription(t('Short human identification or description.'))
+      ->setRequired(TRUE)
+      ->setTranslatable(TRUE)
+      ->setRevisionable(TRUE)
+      ->setSetting('max_length', 1275)
+      ->setDisplayOptions('view', [
+        'label' => 'hidden',
+        'type' => 'string',
+        'weight' => -5,
+      ])
+      ->setDisplayOptions('form', [
+        'type' => 'string_textfield',
+        'weight' => -5,
+        'region' => 'hidden',
+      ])
+      ->setDisplayConfigurable('form', TRUE);
 
     return $fields;
   }

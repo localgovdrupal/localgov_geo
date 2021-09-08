@@ -3,16 +3,10 @@
 Provides a entity for storing, and reusing, geographic information.
 
 Pre-configured to use openstreetmap tiles, and geocoder openstreetmap backend.
-The intention is that this can be exchanged for preferred services.
+The intention is that this can be exchanged for preferred services. More detail
+about gecoder options can be found on the [Installing new Geocoders page](https://github.com/localgovdrupal/localgov_geo/wiki/Installing-new-Geocoders-%5BFAQ:-%22Why-doesn't-it-find-...%22%5D)
 
-There are two default bundle types:
+There are two default bundle types, address and area.
 
-## Address
+There is [an overview of the bundles and reusing addresses on the wiki](https://github.com/localgovdrupal/localgov_geo/wiki/Locations-Module-(LocalGov-Geo)).
 
-Uses the fully featured address field to keep a structured address,
-populated from a geofield geocoder search for a point stored in the
-geofield.
-
-## Area
-
-TODO. Area stored in the geofield, with a descriptive string in a text field.

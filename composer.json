@@ -10,6 +10,10 @@
         "drupal/geocoder": "^3.7",
         "drupal/address": "^1.8",
         "drupal/leaflet": "^2.0",
-        "geocoder-php/nominatim-provider": "^5.2"
+        "geocoder-php/nominatim-provider": "^5.2",
+        "drupal/entity_browser": "^2.5"
+    },
+    "require-dev": {
+        "localgovdrupal/localgov_core": "^2.1"
     }
 }

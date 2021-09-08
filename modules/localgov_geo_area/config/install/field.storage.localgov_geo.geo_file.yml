@@ -2,15 +2,18 @@ langcode: en
 status: true
 dependencies:
   module:
+    - file
     - localgov_geo
-    - text
-    - field
-id: localgov_geo.accessibility
-field_name: accessibility
+id: localgov_geo.geo_file
+field_name: geo_file
 entity_type: localgov_geo
-type: text_long
-settings: {  }
-module: text
+type: file
+settings:
+  display_field: false
+  display_default: false
+  uri_scheme: public
+  target_type: file
+module: file
 locked: false
 cardinality: 1
 translatable: true

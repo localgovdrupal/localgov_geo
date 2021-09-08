@@ -1,5 +1,6 @@
 langcode: en
 status: true
 dependencies: {  }
-id: address
-label: Address
+id: area
+label: Area
+label_token: ''
