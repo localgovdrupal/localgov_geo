@@ -29,7 +29,7 @@ class LocalgovGeoTypeForm extends BundleEntityFormBase {
     }
 
     $form['label'] = [
-      '#title' => $this->t('Label'),
+      '#title' => $this->t('Bundle label'),
       '#type' => 'textfield',
       '#default_value' => $entity_type->label(),
       '#description' => $this->t('The human-readable name of this geo type.'),
@@ -46,6 +46,24 @@ class LocalgovGeoTypeForm extends BundleEntityFormBase {
         'source' => ['label'],
       ],
       '#description' => $this->t('A unique machine-readable name for this geo type. It must only contain lowercase letters, numbers, and underscores.'),
+    ];
+
+    $form['label_token'] = [
+      '#title' => $this->t('Default entity label'),
+      '#type' => 'textfield',
+      '#maxlength' => 1020,
+      '#size' => 120,
+      '#default_value' => $entity_type->labelToken(),
+      '#description' => $this->t('Optional token replacement template to use to generate the label for any entities of this bundle.'),
+      '#element_validate' => ['token_element_validate'],
+      '#after_build' => ['token_element_validate'],
+      '#token_types' => ['localgov_geo'],
+    ];
+
+    // Show the token help relevant to this pattern type.
+    $form['pattern_container']['token_help'] = [
+      '#theme' => 'token_tree_link',
+      '#token_types' => ['localgov_geo'],
     ];
 
     return $this->protectBundleIdElement($form);
@@ -69,6 +87,7 @@ class LocalgovGeoTypeForm extends BundleEntityFormBase {
 
     $entity_type->set('id', trim($entity_type->id()));
     $entity_type->set('label', trim($entity_type->label()));
+    $entity_type->set('label_token', $entity_type->labelToken());
 
     $status = $entity_type->save();
 

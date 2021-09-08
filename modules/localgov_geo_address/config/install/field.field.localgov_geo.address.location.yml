@@ -16,6 +16,5 @@ required: true
 translatable: false
 default_value: {  }
 default_value_callback: ''
-settings:
-  backend: geofield_backend_default
+settings: {  }
 field_type: geofield

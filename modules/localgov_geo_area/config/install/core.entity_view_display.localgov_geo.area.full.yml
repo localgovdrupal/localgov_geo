@@ -1,0 +1,115 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.localgov_geo.full
+    - field.field.localgov_geo.area.external_id
+    - field.field.localgov_geo.area.geo_file
+    - field.field.localgov_geo.area.location
+    - localgov_geo.localgov_geo_type.area
+  module:
+    - file
+    - leaflet
+    - user
+id: localgov_geo.area.full
+targetEntityType: localgov_geo
+bundle: area
+mode: full
+content:
+  created:
+    type: timestamp
+    weight: 3
+    region: content
+    label: above
+    settings:
+      date_format: medium
+      custom_date_format: ''
+      timezone: ''
+    third_party_settings: {  }
+  geo_file:
+    type: file_default
+    weight: 1
+    region: content
+    label: above
+    settings:
+      use_description_as_link_text: true
+    third_party_settings: {  }
+  location:
+    weight: 0
+    label: visually_hidden
+    settings:
+      multiple_map: false
+      leaflet_map: 'OSM Mapnik'
+      height: 400
+      height_unit: px
+      hide_empty_map: false
+      disable_wheel: false
+      fullscreen_control: true
+      gesture_handling: false
+      reset_map:
+        control: false
+        position: topright
+      popup: false
+      popup_content: ''
+      map_position:
+        force: false
+        center:
+          lat: !!float 0
+          lon: !!float 0
+        zoom: 12
+        minZoom: 1
+        maxZoom: 18
+        zoomFiner: 0
+      weight: null
+      icon:
+        iconType: marker
+        iconUrl: ''
+        shadowUrl: ''
+        className: ''
+        iconSize:
+          x: null
+          'y': null
+        iconAnchor:
+          x: null
+          'y': null
+        shadowSize:
+          x: null
+          'y': null
+        shadowAnchor:
+          x: null
+          'y': null
+        popupAnchor:
+          x: null
+          'y': null
+        html: '<div></div>'
+        html_class: leaflet-map-divicon
+        circle_marker_options: '{"radius": 100, "color": "red", "fillColor": "#f03", "fillOpacity": 0.5}'
+      leaflet_markercluster:
+        control: false
+        options: '{"spiderfyOnMaxZoom":true,"showCoverageOnHover":true,"removeOutsideVisibleBounds": false}'
+        include_path: false
+      path: '{"color":"#3388ff","opacity":"1.0","stroke":true,"weight":3,"fill":"depends","fillColor":"*","fillOpacity":"0.2","radius":"6"}'
+      geocoder:
+        control: false
+        settings:
+          position: topright
+          input_size: 25
+          providers: {  }
+          min_terms: 4
+          delay: 800
+          zoom: 16
+          popup: false
+          options: ''
+    third_party_settings: {  }
+    type: leaflet_formatter_default
+    region: content
+  uid:
+    type: author
+    weight: 2
+    region: content
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+hidden:
+  external_id: true
+  status: true
