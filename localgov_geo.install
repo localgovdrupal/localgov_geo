@@ -507,3 +507,29 @@ EOY;
   }
 
 }
+
+/**
+ * Correct localgov_geo_address submodule schema.
+ */
+function localgov_geo_update_8006() {
+  if (drupal_get_installed_schema_version('localgov_geo_address') == 0) {
+    drupal_set_installed_schema_version('localgov_geo_address', 8000);
+  }
+}
+
+/**
+ * Correct import of new config entities.
+ */
+function localgov_geo_update_8807() {
+  foreach ([
+    'entity_view_mode' => 'localgov_geo.embed',
+    'entity_view_mode' => 'localgov_geo.full',
+    'entity_browser' => 'localgov_geo_library',
+    'view' => 'localgov_geo_library',
+  ] as $entity_type => $id) {
+    $service = \Drupal::service('entity_type.manager')->getStorage($entity_type);
+    $config = $service->load($id);
+    $config = $service->createFromStorageRecord($config->toArray());
+    $service->restore($config);
+  }
+}
