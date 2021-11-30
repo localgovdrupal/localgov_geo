@@ -12,7 +12,7 @@ use Drupal\geocoder\ConfigurableProviderUsingHandlerWithAdapterBase;
  * @GeocoderProvider(
  *   id        = "localgov_os_places",
  *   name      = "Localgov OS Places",
- *   handler   = "\LocalgovDrupal\OsPlacesGeocoder\Provider\LocalgovOsPlacesGeocoder",
+ *   handler   = "\LocalgovDrupal\OsPlacesGeocoder\Provider\OsPlacesGeocoder",
  *   arguments = {
  *     "genericAddressQueryUrl" = "https://api.os.uk/search/places/v1/find",
  *     "postcodeQueryUrl"       = "https://api.os.uk/search/places/v1/postcode",
