@@ -2,25 +2,24 @@
 
 namespace Drupal\Tests\localgov_geo\Functional;
 
-use Drupal\localgov_geo\Entity\LocalgovGeoType;
 use Drupal\Tests\BrowserTestBase;
 
 /**
- * Ensures that localgov_geo UI works.
+ * Geo ovewview page access tests.
+ *
+ * Ensures that non-admin users with the right permissions can access the Geo
+ * overview page.
  *
  * @group localgov_geo
  */
-class GeoBundleCreationTest extends BrowserTestBase {
+class GeoOverviewAccessTest extends BrowserTestBase {
 
   /**
    * {@inheritdoc}
    */
   protected static $modules = [
     'system',
-    'text',
-    'field_ui',
     'localgov_geo',
-    'token',
   ];
 
   /**
@@ -37,6 +36,18 @@ class GeoBundleCreationTest extends BrowserTestBase {
   ];
 
   /**
+   * Permissions given to an Editor user.
+   *
+   * @var array
+   */
+  protected static $nonAdminUserPermissions = [
+    'access geo overview',
+    'create geo',
+    'edit geo',
+    'delete geo',
+  ];
+
+  /**
    * An admin test user account.
    *
    * @var \Drupal\Core\Session\AccountInterface
@@ -46,7 +57,7 @@ class GeoBundleCreationTest extends BrowserTestBase {
   /**
    * A non-admin test user account.
    *
-   * @var \Drupal\user\UserInterface
+   * @var \drupal\user\userinterface
    */
   protected $nonAdminUser;
 
@@ -63,29 +74,25 @@ class GeoBundleCreationTest extends BrowserTestBase {
 
     // Have two users ready to be used in tests.
     $this->adminUser = $this->drupalCreateUser(static::$adminUserPermissions);
-    $this->nonAdminUser = $this->drupalCreateUser([]);
+    $this->nonAdminUser = $this->drupalCreateUser(static::$nonAdminUserPermissions);
+
     // Start off logged in as admin.
     $this->drupalLogin($this->adminUser);
   }
 
   /**
-   * Tests the localgov_geo type creation form with only the mandatory options.
+   * Access test for the Geo overview page.
+   *
+   * The Editor user should be able to access the overview page.
    */
-  public function testMediaTypeCreationForm() {
-    $machine_name = mb_strtolower($this->randomMachineName());
+  public function testOverviewPageAccess() {
 
-    $this->drupalGet('/admin/structure/geo_types/add');
+    $this->drupalGet('/admin/content/geo');
     $this->assertSession()->statusCodeEquals(200);
-    $this->assertSession()->fieldExists('label')->setValue($this->randomString());
-    $this->assertSession()->fieldExists('id')->setValue($machine_name);
-    $this->assertSession()->fieldExists('label_token')->setValue('token [localgov_geo:id]');
-    $this->assertSession()->buttonExists('Save')->press();
-    $this->assertSession()->statusCodeEquals(200);
-    $this->assertSession()->addressEquals('admin/structure/geo_types');
 
-    $bundle = LocalgovGeoType::load($machine_name);
-    $this->assertInstanceOf(LocalgovGeoType::class, $bundle);
-    $this->assertEquals('token [localgov_geo:id]', $bundle->labelToken());
+    $this->drupalLogin($this->nonAdminUser);
+    $this->drupalGet('/admin/content/geo');
+    $this->assertSession()->statusCodeEquals(200);
   }
 
 }
