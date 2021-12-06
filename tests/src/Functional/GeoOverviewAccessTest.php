@@ -48,6 +48,16 @@ class GeoOverviewAccessTest extends BrowserTestBase {
   ];
 
   /**
+   * Permissions for non-editor who can create geo.
+   *
+   * @var array
+   */
+  protected static $creatorUserPermissions = [
+    'create geo',
+    'edit geo',
+  ];
+
+  /**
    * An admin test user account.
    *
    * @var \Drupal\Core\Session\AccountInterface
@@ -60,6 +70,13 @@ class GeoOverviewAccessTest extends BrowserTestBase {
    * @var \drupal\user\userinterface
    */
   protected $nonAdminUser;
+
+  /**
+   * A creator test user account.
+   *
+   * @var \drupal\user\userinterface
+   */
+  protected $creatorUser;
 
   /**
    * {@inheritdoc}
@@ -75,6 +92,7 @@ class GeoOverviewAccessTest extends BrowserTestBase {
     // Have two users ready to be used in tests.
     $this->adminUser = $this->drupalCreateUser(static::$adminUserPermissions);
     $this->nonAdminUser = $this->drupalCreateUser(static::$nonAdminUserPermissions);
+    $this->creatorUser = $this->drupalCreateUser(static::$creatorUserPermissions);
 
     // Start off logged in as admin.
     $this->drupalLogin($this->adminUser);
@@ -93,6 +111,10 @@ class GeoOverviewAccessTest extends BrowserTestBase {
     $this->drupalLogin($this->nonAdminUser);
     $this->drupalGet('/admin/content/geo');
     $this->assertSession()->statusCodeEquals(200);
+
+    $this->drupalLogin($this->creatorUser);
+    $this->drupalGet('/admin/content/geo');
+    $this->assertSession()->statusCodeEquals(403);
   }
 
 }
