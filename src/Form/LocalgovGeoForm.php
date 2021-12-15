@@ -4,11 +4,30 @@ namespace Drupal\localgov_geo\Form;
 
 use Drupal\Core\Entity\ContentEntityForm;
 use Drupal\Core\Form\FormStateInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Form controller for the geo entity edit forms.
  */
 class LocalgovGeoForm extends ContentEntityForm {
+
+  /**
+   * The renderer service.
+   *
+   * @var \Drupal\Core\Render\Renderer
+   */
+  protected $renderer;
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function create(ContainerInterface $container) {
+    $form = parent::create($container);
+
+    $form->renderer = $container->get('renderer');
+
+    return $form;
+  }
 
   /**
    * {@inheritdoc}
@@ -20,7 +39,7 @@ class LocalgovGeoForm extends ContentEntityForm {
     $link = $entity->toLink($this->t('View'))->toRenderable();
 
     $message_arguments = ['%label' => $this->entity->label()];
-    $logger_arguments = $message_arguments + ['link' => render($link)];
+    $logger_arguments = $message_arguments + ['link' => $this->renderer->render($link)];
 
     if ($result == SAVED_NEW) {
       $this->messenger()->addStatus($this->t('New geo %label has been created.', $message_arguments));
