@@ -39,7 +39,7 @@ use Drupal\user\UserInterface;
  *   revision_data_table = "localgov_geo_field_revision",
  *   show_revision_ui = TRUE,
  *   translatable = TRUE,
- *   admin_permission = "administer geo types",
+ *   admin_permission = "access geo overview",
  *   entity_keys = {
  *     "id" = "id",
  *     "revision" = "revision_id",

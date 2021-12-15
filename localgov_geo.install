@@ -150,7 +150,7 @@ function localgov_geo_update_8004() {
     ->set("module.localgov_geo_address", 0)
     ->set('module', module_config_sort($extension_config->get('module')))
     ->save(TRUE);
-  drupal_set_installed_schema_version('localgov_geo_address', 0);
+  \Drupal::service('update.update_hook_registry')->setInstalledVersion('localgov_geo_address', 0);
 
   // Copy default view mode to be same as new embed view mode.
   $default = \Drupal::configFactory()->get('core.entity_view_display.localgov_geo.address.default');
@@ -512,8 +512,8 @@ EOY;
  * Correct localgov_geo_address submodule schema.
  */
 function localgov_geo_update_8006() {
-  if (drupal_get_installed_schema_version('localgov_geo_address') == 0) {
-    drupal_set_installed_schema_version('localgov_geo_address', 8000);
+  if (\Drupal::service('update.update_hook_registry')->getInstalledVersion('localgov_geo_address') == 0) {
+    \Drupal::service('update.update_hook_registry')->setInstalledVersion('localgov_geo_address', 8000);
   }
 }
 
