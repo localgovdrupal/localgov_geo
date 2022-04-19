@@ -70,7 +70,7 @@ function localgov_geo_update_8001() {
  */
 function localgov_geo_update_8002(&$sandbox) {
   if (!isset($sandbox['total'])) {
-    $sandbox['total'] = \Drupal::entityQuery('localgov_geo')->count()->execute();
+    $sandbox['total'] = \Drupal::entityQuery('localgov_geo')->count()->accessCheck(FALSE)->execute();
     $sandbox['current'] = 0;
   }
 
