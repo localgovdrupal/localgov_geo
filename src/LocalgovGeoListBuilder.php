@@ -67,8 +67,8 @@ class LocalgovGeoListBuilder extends EntityListBuilder {
 
     $total = $this->getStorage()
       ->getQuery()
-      ->accessCheck(TRUE)
       ->count()
+      ->accessCheck(TRUE)
       ->execute();
 
     $build['summary']['#markup'] = $this->t('Total geos: @total', ['@total' => $total]);
