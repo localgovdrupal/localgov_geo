@@ -52,27 +52,29 @@ content:
         iconType: marker
         iconUrl: ''
         shadowUrl: ''
+        className: ''
         iconSize:
-          x: null
-          'y': null
+          x: ''
+          'y': ''
         iconAnchor:
-          x: null
-          'y': null
+          x: ''
+          'y': ''
         shadowSize:
-          x: null
-          'y': null
+          x: ''
+          'y': ''
         shadowAnchor:
-          x: null
-          'y': null
+          x: ''
+          'y': ''
         popupAnchor:
-          x: null
-          'y': null
+          x: ''
+          'y': ''
         html: '<div></div>'
         html_class: leaflet-map-divicon
         circle_marker_options: '{"radius":100,"color":"red","fillColor":"#f03","fillOpacity":0.5}'
       leaflet_markercluster:
         control: false
         options: '{"spiderfyOnMaxZoom":true,"showCoverageOnHover":true,"removeOutsideVisibleBounds": false}'
+        include_path: false
       fullscreen:
         control: false
         options: '{"position":"topleft","pseudoFullscreen":false}'
@@ -83,6 +85,18 @@ content:
           position: topright
           input_size: 25
           providers:
+            file:
+              weight: 0
+              checked: false
+            gpx_file:
+              weight: 0
+              checked: false
+            geojson_file:
+              weight: 0
+              checked: false
+            kml_file:
+              weight: 0
+              checked: false
             localgov_default_osm:
               weight: 0
               checked: false
@@ -91,6 +105,7 @@ content:
           zoom: 16
           popup: false
           options: ''
+      weight: null
     third_party_settings: {  }
     weight: 0
     region: content
