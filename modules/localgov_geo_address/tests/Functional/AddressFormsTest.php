@@ -22,7 +22,7 @@ class AddressFormsTest extends BrowserTestBase {
   /**
    * {@inheritdoc}
    */
-  public static $modules = [
+  protected static $modules = [
     'system',
     'text',
     'field_ui',
@@ -66,7 +66,7 @@ class AddressFormsTest extends BrowserTestBase {
   /**
    * {@inheritdoc}
    */
-  protected function setUp() {
+  protected function setUp(): void {
     parent::setUp();
 
     // Have two users ready to be used in tests.

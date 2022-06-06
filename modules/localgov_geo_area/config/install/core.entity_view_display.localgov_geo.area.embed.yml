@@ -15,7 +15,7 @@ bundle: area
 mode: embed
 content:
   location:
-    weight: 0
+    type: leaflet_formatter_default
     label: visually_hidden
     settings:
       multiple_map: false
@@ -24,7 +24,6 @@ content:
       height_unit: px
       hide_empty_map: false
       disable_wheel: false
-      fullscreen_control: true
       gesture_handling: false
       reset_map:
         control: false
@@ -40,48 +39,66 @@ content:
         minZoom: 1
         maxZoom: 18
         zoomFiner: 0
-      weight: null
       icon:
         iconType: marker
         iconUrl: ''
         shadowUrl: ''
         className: ''
         iconSize:
-          x: null
-          'y': null
+          x: ''
+          'y': ''
         iconAnchor:
-          x: null
-          'y': null
+          x: ''
+          'y': ''
         shadowSize:
-          x: null
-          'y': null
+          x: ''
+          'y': ''
         shadowAnchor:
-          x: null
-          'y': null
+          x: ''
+          'y': ''
         popupAnchor:
-          x: null
-          'y': null
+          x: ''
+          'y': ''
         html: '<div></div>'
         html_class: leaflet-map-divicon
-        circle_marker_options: '{"radius": 100, "color": "red", "fillColor": "#f03", "fillOpacity": 0.5}'
+        circle_marker_options: '{"radius":100,"color":"red","fillColor":"#f03","fillOpacity":0.5}'
       leaflet_markercluster:
         control: false
         options: '{"spiderfyOnMaxZoom":true,"showCoverageOnHover":true,"removeOutsideVisibleBounds": false}'
         include_path: false
+      fullscreen:
+        control: false
+        options: '{"position":"topleft","pseudoFullscreen":false}'
       path: '{"color":"#3388ff","opacity":"1.0","stroke":true,"weight":3,"fill":"depends","fillColor":"*","fillOpacity":"0.2","radius":"6"}'
       geocoder:
         control: false
         settings:
           position: topright
           input_size: 25
-          providers: {  }
+          providers:
+            file:
+              weight: 0
+              checked: false
+            gpx_file:
+              weight: 0
+              checked: false
+            geojson_file:
+              weight: 0
+              checked: false
+            kml_file:
+              weight: 0
+              checked: false
+            localgov_default_osm:
+              weight: 0
+              checked: false
           min_terms: 4
           delay: 800
           zoom: 16
           popup: false
           options: ''
+      weight: null
     third_party_settings: {  }
-    type: leaflet_formatter_default
+    weight: 0
     region: content
 hidden:
   created: true
