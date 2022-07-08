@@ -555,8 +555,8 @@ function localgov_geo_update_8808() {
 /**
  * Fix for the missing geofield upgrade path for full screen.
  *
- * https://www.drupal.org/project/leaflet/issues/3252649#comment-14355445
- * left unused configuration behind.
+ * Due to https://www.drupal.org/project/leaflet/issues/3252649#comment-14355445
+ * leaving unused configuration behind.
  */
 function localgov_geo_update_8809() {
   if ($geofield_usage = \Drupal::service('entity_field.manager')->getFieldMapByFieldType('geofield')) {
