@@ -533,3 +533,50 @@ function localgov_geo_update_8807() {
     $service->restore($config);
   }
 }
+
+/**
+ * Correct import of new config entities (part 2).
+ *
+ * Live and learn. The duplicated entity ended up with the same UUID.
+ */
+function localgov_geo_update_8808() {
+  $default = \Drupal::configFactory()->get('core.entity_view_display.localgov_geo.address.default');
+  $embed = \Drupal::configFactory()->getEditable('core.entity_view_display.localgov_geo.address.embed');
+  if ($default->get('uuid') == $embed->get('uuid')) {
+    $config = $embed->getRawData();
+    $embed->delete();
+    unset($config['uuid']);
+    $service = \Drupal::service('entity_type.manager')->getStorage('entity_view_display');
+    $embed = $service->createFromStorageRecord($config);
+    $embed->save();
+  }
+}
+
+/**
+ * Fix for the missing geofield upgrade path for full screen.
+ *
+ * https://www.drupal.org/project/leaflet/issues/3252649#comment-14355445
+ * left unused configuration behind.
+ */
+function localgov_geo_update_8809() {
+  if ($geofield_usage = \Drupal::service('entity_field.manager')->getFieldMapByFieldType('geofield')) {
+    foreach ($geofield_usage as $entity_type_id => $fields) {
+      foreach ($fields as $field_name => $field_map) {
+        foreach ($field_map['bundles'] as $bundle) {
+          $properties = [
+            'targetEntityType' => $entity_type_id,
+            'bundle' => $bundle,
+          ];
+          if ($view_displays = \Drupal::entityTypeManager()->getStorage('entity_view_display')->loadByProperties($properties)) {
+            foreach ($view_displays as $view_display) {
+              if ($component = $view_display->getComponent($field_name)) {
+                unset($component['settings']['fullscreen_control']);
+                $view_display->setComponent($field_name, $component)->save();
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
