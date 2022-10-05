@@ -19,8 +19,8 @@
   {% if content %}
     {% if content.location['#object'].location|length == 0 %}
       {{- content|without('label', 'location') -}}
-      {% else %}
-        {{- content|without('label') -}}
+    {% else %}
+      {{- content|without('label') -}}
     {% endif %}
   {% endif %}
 </article>
