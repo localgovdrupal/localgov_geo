@@ -7,7 +7,7 @@
     "require": {
         "drupal/address": "^1.8",
         "drupal/entity_browser": "^2.5",
-        "drupal/geocoder": "^3.7",
+        "drupal/geocoder": "^4.4",
         "drupal/geofield": "^1.15",
         "drupal/geofield_map": "^2.66",
         "drupal/inline_entity_form": "^1.0-rc9",
