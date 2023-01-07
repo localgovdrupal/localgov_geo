@@ -16,3 +16,10 @@ This module provides a Drupal geocoder plugin for the [Ordnance Survey Places PH
 ### Good to know
 - Install the [Ordnance Survey Places PHP geocoder](https://packagist.org/packages/localgovdrupal/localgov_os_places_geocoder_provider) to use this plugin as per the composer suggestion.
 - There is a [known issue](https://www.drupal.org/project/geocoder/issues/3153678#comment-14203727) with Drupal geocoder plugins that they sometimes do not immediately appear in the *Geocoder provider* dropdown at /admin/config/system/geocoder/geocoder-provider.  If this happens, restart PHP or the (virtual) machine hosting PHP and then review the dropdown.
+
+## Maintainers
+
+Current maintainers: 
+
+ - Ekes https://github.com/ekes
+ 
