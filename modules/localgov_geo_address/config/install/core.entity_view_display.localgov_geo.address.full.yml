@@ -37,9 +37,20 @@ content:
       gesture_handling: false
       reset_map:
         control: false
-        position: topright
+        options: '{"position":"topleft","title":"Reset View"}'
+      locate:
+        control: false
+        options: '{"position":"topright","setView":"untilPanOrZoom","returnToPrevBounds":true,"keepCurrentZoomLevel":true,"strings":{"title":"Locate my position"}}'
+        automatic: false
+      leaflet_tooltip:
+        value: ''
+        options: '{"permanent":false,"direction":"center"}'
       popup: false
       popup_content: ''
+      leaflet_popup:
+        control: '0'
+        content: ''
+        options: '{"maxWidth":"300","minWidth":"50","autoPan":true}'
       map_position:
         force: false
         center:
@@ -75,29 +86,20 @@ content:
       leaflet_markercluster:
         control: false
         options: '{"spiderfyOnMaxZoom":true,"showCoverageOnHover":true,"removeOutsideVisibleBounds": false}'
+        excluded: ''
         include_path: false
       fullscreen:
         control: false
         options: '{"position":"topleft","pseudoFullscreen":false}'
       path: '{"color":"#3388ff","opacity":"1.0","stroke":true,"weight":3,"fill":"depends","fillColor":"*","fillOpacity":"0.2"}'
+      feature_properties:
+        values: ''
       geocoder:
         control: false
         settings:
           position: topright
           input_size: 25
           providers:
-            file:
-              weight: 0
-              checked: false
-            gpx_file:
-              weight: 0
-              checked: false
-            geojson_file:
-              weight: 0
-              checked: false
-            kml_file:
-              weight: 0
-              checked: false
             localgov_default_osm:
               weight: 0
               checked: false
@@ -106,7 +108,10 @@ content:
           zoom: 16
           popup: false
           options: ''
-    third_party_settings: {  }
+      weight: null
+    third_party_settings:
+      field_formatter_class:
+        class: ''
     weight: 0
     region: content
   postal_address:
