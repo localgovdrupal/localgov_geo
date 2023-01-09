@@ -1,3 +1,4 @@
+uuid: f8350ab2-3a8e-45d8-b624-2c6593dc4ee2
 langcode: en
 status: true
 dependencies:
@@ -9,9 +10,10 @@ dependencies:
     - localgov_geo.localgov_geo_type.address
   module:
     - address
-    - field_formatter_class
     - leaflet
     - text
+_core:
+  default_config_hash: vwo755Ihx37BLV59rHthQxP1sjXPMFi2yNaErc5GEmE
 id: localgov_geo.address.default
 targetEntityType: localgov_geo
 bundle: address
