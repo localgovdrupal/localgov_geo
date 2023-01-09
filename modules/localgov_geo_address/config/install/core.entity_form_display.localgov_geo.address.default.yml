@@ -67,18 +67,6 @@ content:
         control: 0
         settings:
           providers:
-            file:
-              weight: 0
-              checked: false
-            gpx_file:
-              weight: 0
-              checked: false
-            geojson_file:
-              weight: 0
-              checked: false
-            kml_file:
-              weight: 0
-              checked: false
             localgov_default_osm:
               weight: 0
               checked: false
