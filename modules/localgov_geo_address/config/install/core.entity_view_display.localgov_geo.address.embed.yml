@@ -109,9 +109,7 @@ content:
           popup: false
           options: ''
       weight: null
-    third_party_settings:
-      field_formatter_class:
-        class: ''
+    third_party_settings: {  }
     weight: 0
     region: content
   postal_address:
