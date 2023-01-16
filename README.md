@@ -22,4 +22,5 @@ This module provides a Drupal geocoder plugin for the [Ordnance Survey Places PH
 Current maintainers: 
 
  - Ekes https://github.com/ekes
+ - Finn: https://github.com/finnlewis
  
