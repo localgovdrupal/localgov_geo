@@ -14,8 +14,13 @@
  * @see template_preprocess_localgov_geo()
  */
 #}
+
 <article{{ attributes }}>
   {% if content %}
-    {{- content|without('label') -}}
+    {% if content.location['#object'].location|length == 0 %}
+      {{- content|without('label', 'location') -}}
+    {% else %}
+      {{- content|without('label') -}}
+    {% endif %}
   {% endif %}
 </article>
