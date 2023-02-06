@@ -2,12 +2,12 @@ langcode: en
 status: true
 dependencies: {  }
 id: localgov_default_osm
-label: OpenStreetMap
+label: 'OpenStreetMap Nominatim (default demo configuration)'
 plugin: openstreetmap
 configuration:
-  rootUrl: 'https://nominatim.openstreetmap.org'
-  userAgent: LocalGovDrupal
-  referer: 'https://localgov.lndo.site/'
   throttle:
     period: 2
     limit: 1
+  rootUrl: 'https://nominatim.openstreetmap.org'
+  userAgent: DrupalGeoDefaultConfig
+  referer: 'https://drupal.org/'
