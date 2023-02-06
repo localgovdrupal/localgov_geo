@@ -1,14 +1,14 @@
 <?php
 
-namespace Drupal\Tests\localgov_geo\Functional;
+namespace Drupal\Tests\geo_entity\Functional;
 
-use Drupal\localgov_geo\Entity\LocalgovGeoType;
+use Drupal\geo_entity\Entity\GeoEntityType;
 use Drupal\Tests\BrowserTestBase;
 
 /**
- * Ensures that localgov_geo UI works.
+ * Ensures that geo_entity UI works.
  *
- * @group localgov_geo
+ * @group geo_entity
  */
 class GeoBundleCreationTest extends BrowserTestBase {
 
@@ -19,7 +19,7 @@ class GeoBundleCreationTest extends BrowserTestBase {
     'system',
     'text',
     'field_ui',
-    'localgov_geo',
+    'geo_entity',
     'token',
   ];
 
@@ -69,7 +69,7 @@ class GeoBundleCreationTest extends BrowserTestBase {
   }
 
   /**
-   * Tests the localgov_geo type creation form with only the mandatory options.
+   * Tests the geo_entity type creation form with only the mandatory options.
    */
   public function testMediaTypeCreationForm() {
     $machine_name = mb_strtolower($this->randomMachineName());
@@ -78,14 +78,14 @@ class GeoBundleCreationTest extends BrowserTestBase {
     $this->assertSession()->statusCodeEquals(200);
     $this->assertSession()->fieldExists('label')->setValue($this->randomString());
     $this->assertSession()->fieldExists('id')->setValue($machine_name);
-    $this->assertSession()->fieldExists('label_token')->setValue('token [localgov_geo:id]');
+    $this->assertSession()->fieldExists('label_token')->setValue('token [geo_entity:id]');
     $this->assertSession()->buttonExists('Save')->press();
     $this->assertSession()->statusCodeEquals(200);
     $this->assertSession()->addressEquals('admin/structure/geo_types');
 
-    $bundle = LocalgovGeoType::load($machine_name);
-    $this->assertInstanceOf(LocalgovGeoType::class, $bundle);
-    $this->assertEquals('token [localgov_geo:id]', $bundle->labelToken());
+    $bundle = GeoEntityType::load($machine_name);
+    $this->assertInstanceOf(GeoEntityType::class, $bundle);
+    $this->assertEquals('token [geo_entity:id]', $bundle->labelToken());
   }
 
 }

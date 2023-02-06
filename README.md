@@ -4,11 +4,11 @@ Provides a entity for storing, and reusing, geographic information.
 
 Pre-configured to use openstreetmap tiles, and geocoder openstreetmap backend.
 The intention is that this can be exchanged for preferred services. More detail
-about gecoder options can be found on the [Installing new Geocoders page](https://github.com/localgovdrupal/localgov_geo/wiki/Installing-new-Geocoders-%5BFAQ:-%22Why-doesn't-it-find-...%22%5D)
+about gecoder options can be found on the [Installing new Geocoders page](https://github.com/localgovdrupal/geo_entity/wiki/Installing-new-Geocoders-%5BFAQ:-%22Why-doesn't-it-find-...%22%5D)
 
 There are two default bundle types, address and area.
 
-There is [an overview of the bundles and reusing addresses on the wiki](https://github.com/localgovdrupal/localgov_geo/wiki/Locations-Module-(LocalGov-Geo)).
+There is [an overview of the bundles and reusing addresses on the wiki](https://github.com/localgovdrupal/geo_entity/wiki/Locations-Module-(LocalGov-Geo)).
 
 ## Ordnance Survey Places geocoder
 This module provides a Drupal geocoder plugin for the [Ordnance Survey Places PHP geocoder](https://packagist.org/packages/localgovdrupal/localgov_os_places_geocoder_provider).  This plugin is useful for geocoding and address lookup using the [Ordnance Survey Places API](https://osdatahub.os.uk/docs/places/overview) which covers addresses in the UK.  This plugin requires an API key.  It is free for UK local authorities.

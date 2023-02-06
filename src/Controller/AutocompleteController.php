@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\localgov_geo\Controller;
+namespace Drupal\geo_entity\Controller;
 
 use Drupal\Component\Utility\Crypt;
 use Drupal\Core\Controller\ControllerBase;
@@ -52,7 +52,7 @@ class AutocompleteController extends ControllerBase {
   public static function create(ContainerInterface $container) {
     return new static(
       $container->get('geocoder'),
-      $container->get('keyvalue')->get('localgov_geo_address_autocomplete')
+      $container->get('keyvalue')->get('geo_entity_address_autocomplete')
     );
   }
 

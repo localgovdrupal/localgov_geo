@@ -1,0 +1,18 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.geo_entity.external_id
+    - geo_entity.geo_entity_type.address
+id: geo_entity.address.external_id
+field_name: external_id
+entity_type: geo_entity
+bundle: address
+label: 'External ID'
+description: 'An field for storing external identifier for synchronising with geoservice providers.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

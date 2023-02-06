@@ -1,0 +1,18 @@
+<?php
+
+/**
+ * @file
+ * Provides a geo entity address type.
+ */
+
+/**
+ * Implements hook_theme().
+ */
+function geo_entity_address_theme($existing, $type, $theme, $path) {
+  return [
+    'geo_entity__address__embed' => [
+      'template' => 'geo-entity--address--embed',
+      'base hook' => 'geo_entity',
+    ],
+  ];
+}

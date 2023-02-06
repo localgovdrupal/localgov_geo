@@ -1,0 +1,7 @@
+geo_entity.autocomplete:
+  path: /geo_entity/{settings_key}
+  defaults:
+    _controller: \Drupal\geo_entity\Controller\AutocompleteController::autocomplete
+  requirements:
+    # As core autocomplete this checks the settings key in the controller.
+    _access: 'TRUE'

@@ -1,0 +1,43 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_form_mode.geo_entity.inline
+    - field.field.geo_entity.area.external_id
+    - field.field.geo_entity.area.geo_file
+    - field.field.geo_entity.area.location
+    - geo_entity.geo_entity_type.area
+  module:
+    - file
+    - geofield
+id: geo_entity.area.inline
+targetEntityType: geo_entity
+bundle: area
+mode: inline
+content:
+  geo_file:
+    weight: 2
+    settings:
+      progress_indicator: throbber
+    third_party_settings: {  }
+    type: file_generic
+    region: content
+  label:
+    type: string_textfield
+    weight: 0
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  location:
+    weight: 1
+    settings: {  }
+    third_party_settings: {  }
+    type: geofield_default
+    region: content
+hidden:
+  created: true
+  external_id: true
+  status: true
+  uid: true

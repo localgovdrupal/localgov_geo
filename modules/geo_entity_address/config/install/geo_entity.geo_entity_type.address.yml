@@ -1,0 +1,6 @@
+langcode: en
+status: true
+dependencies: {  }
+id: address
+label: Address
+label_token: '[geo_entity:postal_address]'

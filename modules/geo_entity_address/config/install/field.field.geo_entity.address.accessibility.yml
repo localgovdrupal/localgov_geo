@@ -1,0 +1,20 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.geo_entity.accessibility
+    - geo_entity.geo_entity_type.address
+  module:
+    - text
+id: geo_entity.address.accessibility
+field_name: accessibility
+entity_type: geo_entity
+bundle: address
+label: Accessibility
+description: 'Any information about access, or restrictions, at the address.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: text_long

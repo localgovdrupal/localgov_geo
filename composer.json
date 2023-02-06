@@ -1,8 +1,8 @@
 {
-    "name": "localgovdrupal/localgov_geo",
+    "name": "drupal/geo_entity",
     "type": "drupal-module",
-    "description": "LocalGov Drupal Geo integration",
-    "homepage": "https://github.com/localgovdrupal/localgov_geo",
+    "description": "Geo Entity",
+    "homepage": "https://github.com/localgovdrupal/geo_entity",
     "license": "GPL-2.0-or-later",
     "require": {
         "drupal/address": "^1.8",
@@ -14,11 +14,5 @@
         "drupal/leaflet": "^10.0",
         "drupal/token": "^1.10",
         "geocoder-php/nominatim-provider": "^5.2"
-    },
-    "require-dev": {
-        "localgovdrupal/localgov_core": "^2.1"
-    },
-    "suggest": {
-        "localgovdrupal/localgov_os_places_geocoder_provider": "1.x-dev"
     }
 }

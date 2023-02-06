@@ -1,7 +1,7 @@
 ##
 # Managed by https://github.com/localgovdrupal/github_workflow_manager
 ---
-name: Test localgovdrupal/localgov_geo drupal-module
+name: Test localgovdrupal/geo_entity drupal-module
 
 on:
   push:
@@ -12,8 +12,8 @@ on:
       - '1.x'
 
 env:
-  LOCALGOV_DRUPAL_PROJECT: localgovdrupal/localgov_geo
-  LOCALGOV_DRUPAL_PROJECT_PATH: web/modules/contrib/localgov_geo
+  LOCALGOV_DRUPAL_PROJECT: localgovdrupal/geo_entity
+  LOCALGOV_DRUPAL_PROJECT_PATH: web/modules/contrib/geo_entity
 
 jobs:
 

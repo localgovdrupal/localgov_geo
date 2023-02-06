@@ -1,0 +1,20 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.geo_entity.location
+    - geo_entity.geo_entity_type.address
+  module:
+    - geofield
+id: geo_entity.address.location
+field_name: location
+entity_type: geo_entity
+bundle: address
+label: location
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: geofield

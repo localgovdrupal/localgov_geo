@@ -1,0 +1,11 @@
+geo_entity.type_add:
+  route_name: entity.geo_entity_type.add_form
+  title: 'Add geo type'
+  appears_on:
+    - entity.geo_entity_type.collection
+
+geo_entity.add_page:
+  route_name: entity.geo_entity.add_page
+  title: 'Add geo'
+  appears_on:
+    - entity.geo_entity.collection

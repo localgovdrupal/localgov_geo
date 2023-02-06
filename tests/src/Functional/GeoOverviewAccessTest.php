@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\Tests\localgov_geo\Functional;
+namespace Drupal\Tests\geo_entity\Functional;
 
 use Drupal\Tests\BrowserTestBase;
 
@@ -10,7 +10,7 @@ use Drupal\Tests\BrowserTestBase;
  * Ensures that non-admin users with the right permissions can access the Geo
  * overview page.
  *
- * @group localgov_geo
+ * @group geo_entity
  */
 class GeoOverviewAccessTest extends BrowserTestBase {
 
@@ -19,7 +19,7 @@ class GeoOverviewAccessTest extends BrowserTestBase {
    */
   protected static $modules = [
     'system',
-    'localgov_geo',
+    'geo_entity',
   ];
 
   /**
