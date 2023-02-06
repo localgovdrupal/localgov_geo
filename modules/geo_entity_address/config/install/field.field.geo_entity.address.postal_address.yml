@@ -11,14 +11,13 @@ field_name: postal_address
 entity_type: geo_entity
 bundle: address
 label: Address
-description: 'Enter the address here, and then use the ''Populate from address field'' button to find it on the map.'
+description: "Enter the address here, and then use the 'Populate from address field' button to find it on the map."
 required: true
 translatable: false
 default_value: {  }
 default_value_callback: ''
 settings:
-  available_countries:
-    GB: GB
+  available_countries: {  }
   langcode_override: ''
   field_overrides:
     givenName:
