@@ -1,5 +1,5 @@
 entity.geo_entity_type.collection:
   title: 'Geo types'
   parent: system.admin_structure
-  description: 'Manage and CRUD actions on Geo type.'
+  description: 'Create and manage fields, forms, and display settings of Geo Entities.'
   route_name: entity.geo_entity_type.collection
