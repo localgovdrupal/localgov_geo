@@ -1,4 +1,4 @@
-(function ($, Drupal) {
+(function ($, Drupal, once) {
   var autocomplete;
 
   function autocompleteSplitValues(value) {
@@ -123,22 +123,23 @@
   Drupal.behaviors.geo_entity_address_autocomplete = {
     attach: function attach(context) {
       var $address = $(context).find('.geo-entity-autocomplete');
-      var $addressFields = $address.find('input').once('autocomplete');
+      var $addressFields = once('autocomplete', '.geo-entity-autocomplete input', context);
 
       if ($addressFields.length) {
-        $addressFields.autocomplete(autocomplete.options).each(function () {
-	  var uiAutocomplete = $(this).data('ui-autocomplete');
-          var inputName = $(this).attr('name');
+        $addressFields.forEach(function (value, i) {
+          $(value).autocomplete(autocomplete.options);
+	  var uiAutocomplete = $(value).data('ui-autocomplete');
+          var inputName = $(value).attr('name');
           uiAutocomplete.search = searchMultipleFieldValues;
           uiAutocomplete._renderItem = autocomplete.options.renderItem;
           uiAutocomplete.addressWrapperId = $address.attr('id');
           uiAutocomplete.sourceUrl = $address.attr('data-autocomplete-path');
           uiAutocomplete.addressPart = inputName.substring(inputName.lastIndexOf('[') + 1, inputName.lastIndexOf(']'));
         });
-        $addressFields.on('compositionstart.autocomplete', function () {
+        $($addressFields).on('compositionstart.autocomplete', function () {
           autocomplete.options.isComposing = true;
         });
-        $addressFields.on('compositionend.autocomplete', function () {
+        $($addressFields).on('compositionend.autocomplete', function () {
           autocomplete.options.isComposing = false;
         });
       }
@@ -168,4 +169,4 @@
     }
   };
   Drupal.geo_entity_autocomplete = autocomplete;
-}(jQuery, Drupal));
+}(jQuery, Drupal, once));
