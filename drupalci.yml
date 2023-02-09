@@ -12,7 +12,7 @@ build:
         sniff-all-files: false
         halt-on-fail: false
     testing:
-      container_command : 
+      container_command.disable_plugin: 
         commands: "cd ${SOURCE_DIR} && sudo -u www-data composer config --no-plugins allow-plugins.php-http/discovery false"
       # Run code quality checks.
       #container_command.commit-checks:
