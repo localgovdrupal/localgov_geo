@@ -27,31 +27,31 @@ build:
         types: 'PHPUnit-Unit'
         suppress-deprecations: false
         halt-on-fail: false
-        <<: *testgroups
+        testgroups: '--all'
       run_tests.kernel:
         types: 'PHPUnit-Kernel'
         suppress-deprecations: false
         halt-on-fail: false
-        <<: *testgroups
+        testgroups: '--all'
       run_tests.build:
         # Limit concurrency due to disk space concerns.
         concurrency: 3
         types: 'PHPUnit-Build'
         suppress-deprecations: false
         halt-on-fail: false
-        <<: *testgroups
+        testgroups: '--all'
       run_tests.functional:
         types: 'PHPUnit-Functional'
         suppress-deprecations: false
         halt-on-fail: false
-        <<: *testgroups
+        testgroups: '--all'
       run_tests.javascript:
         concurrency: 3
         types: 'PHPUnit-FunctionalJavascript'
         suppress-deprecations: false
         halt-on-fail: false
+        testgroups: '--all'
         <<: *testgroups
       # Run nightwatch testing.
       # @see https://www.drupal.org/project/drupal/issues/2869825
       nightwatchjs: {}
-
