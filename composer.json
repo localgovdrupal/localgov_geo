@@ -13,7 +13,8 @@
         "drupal/inline_entity_form": "^1.0-rc9",
         "drupal/leaflet": "^10.0",
         "drupal/token": "^1.10",
-        "geocoder-php/nominatim-provider": "^5.2"
+        "geocoder-php/nominatim-provider": "^5.2",
+        "php-http/discovery": "1.14.3"
     },
     "require-dev": {
         "localgovdrupal/localgov_core": "^2.1"
