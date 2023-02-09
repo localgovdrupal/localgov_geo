@@ -5,14 +5,14 @@
     "homepage": "https://github.com/localgovdrupal/geo_entity",
     "license": "GPL-2.0-or-later",
     "require": {
-        "drupal/address": "^1.8",
-        "drupal/entity_browser": "^2.5",
-        "drupal/geocoder": "^3.7",
-        "drupal/geofield": "^1.15",
-        "drupal/geofield_map": "^2.66",
-        "drupal/inline_entity_form": "^1.0-rc9",
+        "drupal/address": "^1.11",
+        "drupal/entity_browser": "^2.9",
+        "drupal/geocoder": "^4.4",
+        "drupal/geofield": "^1.52",
+        "drupal/geofield_map": "^3.0.7",
+        "drupal/inline_entity_form": "^1.0-rc14",
         "drupal/leaflet": "^10.0",
-        "drupal/token": "^1.10",
-        "geocoder-php/nominatim-provider": "^5.2"
+        "drupal/token": "^1.11",
+        "geocoder-php/nominatim-provider": "^5.6"
     }
 }
