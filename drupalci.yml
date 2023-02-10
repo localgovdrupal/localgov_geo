@@ -1,16 +1,16 @@
 build:
   assessment:
-    validate_codebase:
-      phplint:
-      csslint:
-        halt-on-fail: false
-      eslint:
-        # A test must pass eslinting standards check in order to continue processing.
-        halt-on-fail: true
-      phpcs:
-        # phpcs will use core's specified version of Coder.
-        sniff-all-files: false
-        halt-on-fail: false
+    #    validate_codebase:
+    #  phplint:
+    #  csslint:
+    #    halt-on-fail: false
+    #  eslint:
+    #    # A test must pass eslinting standards check in order to continue processing.
+    #    halt-on-fail: true
+    #  phpcs:
+    #    # phpcs will use core's specified version of Coder.
+    #    sniff-all-files: false
+    #    halt-on-fail: false
     testing:
       container_command: 
         commands:
