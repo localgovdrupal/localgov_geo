@@ -20,6 +20,14 @@ use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 class AutocompleteController extends ControllerBase {
 
   /**
+   * Codes for countries where house number comes before street name.
+   */
+  public const NUMBER_STREET_COUNTRIES = [
+    'AU', 'CA', 'FR', 'GB', 'FJ', 'HK', 'IN', 'IE', 'IL', 'LU', 'MY', 'NZ',
+    'PK', 'PH', 'SG', 'LK', 'ZA', 'TW', 'TH', 'UK', 'US',
+  ];
+
+  /**
    * The geocoder service.
    *
    * @var \Drupal\geocoder\GeocoderInterface
@@ -124,10 +132,18 @@ class AutocompleteController extends ControllerBase {
           // Probably should be localized. Does this info exist in address
           // field data?
           $suggestion_array = $suggestion->toArray();
-          $street_address = implode(' ', array_filter([
-            $suggestion->getStreetNumber(),
-            $suggestion->getStreetName(),
-          ]));
+          if (in_array($suggestion_array['countryCode'], self::NUMBER_STREET_COUNTRIES)) {
+            $street_address = implode(' ', array_filter([
+              $suggestion->getStreetNumber(),
+              $suggestion->getStreetName(),
+            ]));
+          }
+          else {
+            $street_address = implode(' ', array_filter([
+              $suggestion->getStreetName(),
+              $suggestion->getStreetNumber(),
+            ]));
+          }
           $suggestion_array['drupal_address']['address_line1'] = $street_address;
           foreach ($available_fields as $address_element) {
             if (isset($mapping[$address_element])) {
