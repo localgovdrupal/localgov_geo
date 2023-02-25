@@ -81,10 +81,12 @@
   addressField.find('input[name*="' + key + '"]').val(ui.item.key.drupal_address[key]);
 });
     // Relative and allowing for partial id naming for embedded forms.
-    var geofieldName = addressField.attr('data-geocode-geofield');
-    var parentForm = addressField.closest('form');
-    parentForm.find('input[data-drupal-selector^="edit-"][data-drupal-selector$="' + geofieldName + '-0-value-lat"]').val(ui.item.key.latitude);
-    parentForm.find('input[data-drupal-selector^="edit-"][data-drupal-selector$="' + geofieldName + '-0-value-lon"]').val(ui.item.key.longitude).trigger('change');
+    event.target.form.dispatchEvent(new CustomEvent('geoEntityGeocode', {
+      detail: {
+        lon: ui.item.key.longitude,
+        lat: ui.item.key.latitude,
+      },
+    }));
     return false;
   }
 
@@ -128,7 +130,7 @@
       if ($addressFields.length) {
         $addressFields.forEach(function (value, i) {
           $(value).autocomplete(autocomplete.options);
-	  var uiAutocomplete = $(value).data('ui-autocomplete');
+          var uiAutocomplete = $(value).data('ui-autocomplete');
           var inputName = $(value).attr('name');
           uiAutocomplete.search = searchMultipleFieldValues;
           uiAutocomplete._renderItem = autocomplete.options.renderItem;
@@ -146,7 +148,9 @@
     },
     detach: function detach(context, settings, trigger) {
       if (trigger === 'unload') {
-        $(context).find('input.geo-entity-autocomplete').removeOnce('autocomplete').autocomplete('destroy');
+        once.remove('autocomplete', '.geo-entity-autocomplete input', context).forEach( function (value) {
+          $(value).autocomplete('destroy');
+        });
       }
     }
   };

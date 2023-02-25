@@ -5,6 +5,7 @@
  * Provides a geo entity type.
  */
 
+use Drupal\Component\Utility\Html;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Render\Element;
 use Drupal\views\ViewExecutable;
@@ -101,6 +102,29 @@ function geo_entity_views_pre_render(ViewExecutable $view) {
   if ($view->id() == 'geo_entity_library') {
     $view->element['#attached']['library'][] = 'geo_entity/geobrowser';
   }
+}
+
+/**
+ * Implements hook_geofield_map_latlon_element_alter().
+ *
+ * Adds JS event handler to Geofield Map lon lat fields for geocoder.
+ */
+function geo_entity_geofield_map_latlon_element_alter(array &$map_settings, array &$complete_form, array &$form_state_values) {
+  $complete_form['#attached']['library'] = 'geo_entity/geocode-geofield';
+  $complete_form['#attached']['drupalSettings']['geoEntityGeocode']['geofield'][$complete_form['#id']] = [
+    'lon' => $map_settings['lngid'],
+    'lat' => $map_settings['latid'],
+  ];
+}
+
+/**
+ * Implements hook_field_widget_single_element_WIDGET_TYPE_form_alter().
+ *
+ * Adds JS event handler to Leaflet fields for geocoder.
+ */
+function geo_entity_field_widget_single_element_leaflet_widget_default_form_alter(&$element, FormStateInterface $form_state, $context) {
+  $element['map']['#attached']['drupalSettings']['geoEntityGeocode']['leaflet'][Html::getId($form_state->getFormObject()->getFormId())] = $element['map']['#map_id'];
+  $element['map']['#attached']['library'][] = 'geo_entity/geocode-leaflet';
 }
 
 /**
