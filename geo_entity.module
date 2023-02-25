@@ -126,22 +126,3 @@ function geo_entity_field_widget_single_element_leaflet_widget_default_form_alte
   $element['map']['#attached']['drupalSettings']['geoEntityGeocode']['leaflet'][Html::getId($form_state->getFormObject()->getFormId())] = $element['map']['#map_id'];
   $element['map']['#attached']['library'][] = 'geo_entity/geocode-leaflet';
 }
-
-/**
- * Implements hook_localgov_roles_default().
- */
-function geo_entity_localgov_roles_default() {
-  return [
-    // @codingStandardsIgnoreLine
-    \Drupal\localgov_roles\RolesHelper::EDITOR_ROLE => [
-      'access geo overview',
-      'create geo',
-      'delete geo',
-      'edit geo',
-    ],
-    // @codingStandardsIgnoreLine
-    \Drupal\localgov_roles\RolesHelper::AUTHOR_ROLE => [
-      'create geo',
-    ],
-  ];
-}
