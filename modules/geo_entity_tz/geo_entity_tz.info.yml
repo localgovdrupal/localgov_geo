@@ -1,0 +1,8 @@
+name: Geo Entity Timezone
+type: module
+description: Populate Timezone field from Geofield location using Geonames.
+core_version_requirement: ^9 || ^10
+dependencies:
+  - geofield:geofield
+  - tzfield:tzfield
+  - geo_entity:geo_entity

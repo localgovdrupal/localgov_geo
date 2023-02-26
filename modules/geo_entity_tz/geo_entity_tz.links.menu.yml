@@ -1,0 +1,6 @@
+geo_entity_tz.settings_form:
+  title: 'Geofield Timezone'
+  description: 'Configure Geofield Timezone.'
+  parent: system.admin_config_system
+  route_name: geo_entity_tz.settings_form
+  weight: 10

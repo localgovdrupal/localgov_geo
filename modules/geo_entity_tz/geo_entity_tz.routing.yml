@@ -1,0 +1,7 @@
+geo_entity_tz.settings_form:
+  path: '/admin/config/system/geo_entity_tz'
+  defaults:
+    _title: 'Geofield Timezone settings'
+    _form: 'Drupal\geo_entity_tz\Form\SettingsForm'
+  requirements:
+    _permission: 'administer geo_entity_tz configuration'

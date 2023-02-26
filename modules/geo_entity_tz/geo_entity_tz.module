@@ -1,0 +1,77 @@
+<?php
+
+/**
+ * @file
+ * Geo Entity Timezone integration hooks.
+ */
+
+use Drupal\Core\Entity\EntityFieldManagerInterface;
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\field\FieldConfigInterface;
+use Drupal\geo_entity\GeoEntityInterface;
+use Drupal\geo_entity_tz\GeonamesException;
+
+/**
+ * Implements hook_ENTITY_TYPE_presave().
+ */
+function geo_entity_tz_geo_entity_presave(GeoEntityInterface $geo) {
+  foreach ($geo->getFieldDefinitions() as $field) {
+    if ($field->getType() == 'tzfield' && ($geofield = $field->getThirdPartySetting('geo_entity_tz', 'geofield'))) {
+      $geonames_tz = \Drupal::service('geo_entity_tz.geonames_timezone');
+      $timezones = $geo->get($field->getName())->getValue();
+      foreach ($geo->get($geofield) as $delta => $geofield_item) {
+        // Look up timezone if tzfield is empty, or if the geofield has changed.
+        if (!empty($timezones[$delta])
+          && ($geo->original instanceof GeoEntityInterface)
+          && ($geo->original->$geofield->get($delta)->value == $geofield_item->value)
+        ) {
+          continue;
+        }
+        $lat = $geofield_item->get('lat')->getValue();
+        $lon = $geofield_item->get('lon')->getValue();
+        try {
+          $timezone_id = $geonames_tz->getTimezone($lat, $lon);
+        }
+        catch (GeonamesException $e) {
+          if ($e->getCode() == 1 && \Drupal::currentUser()->hasPermission('administer geo_entity_tz configuration')) {
+            \Drupal::messenger()->addWarning(\t('Timezone lookup requires Geonames Username'));
+          }
+          continue;
+        }
+        $timezones[$delta] = $timezone_id;
+      }
+      $geo->set($field->getName(), $timezones, FALSE);
+    }
+  }
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function geo_entity_form_field_config_edit_form_alter(array &$form, FormStateInterface $form_state) {
+  $field = $form_state->getFormObject()->getEntity();
+  assert($field instanceof FieldConfigInterface);
+  if ($field->getType() != 'tzfield') {
+    return;
+  }
+  $entity_field_manager = \Drupal::service('entity_field.manager');
+  assert($entity_field_manager instanceof EntityFieldManagerInterface);
+
+  $location_fields = [
+    '' => '',
+  ];
+  $other_fields = $entity_field_manager->getFieldDefinitions($field->getTargetEntityTypeId(), $field->getTargetBundle());
+  foreach ($other_fields as $other_field) {
+    if ($other_field->getType() == 'geofield') {
+      $location_fields[$other_field->getName()] = $other_field->getLabel();
+    }
+  }
+
+  $form['third_party_settings']['geo_entity_tz']['geofield'] = [
+    '#title' => \t('From location field'),
+    '#type' => 'select',
+    '#options' => $location_fields,
+    '#description' => \t('Lookup timezone from location using Geonames.'),
+    '#default_value' => $field->getThirdPartySetting('geo_entity_tz', 'geofield'),
+  ];
+}

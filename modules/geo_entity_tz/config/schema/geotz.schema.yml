@@ -1,0 +1,19 @@
+# Schema for the configuration files of the Geofield Timezone module.
+geo_entity_tz.settings:
+  type: config_object
+  label: 'Geofield Timezone settings'
+  mapping:
+    username:
+      type: string
+      label: 'Geonames username'
+    token:
+      type: string
+      label: 'Premium account token'
+
+field.widget.settings.geo_entity_tz_geofield_geonames:
+  type: mapping
+  label: 'Geonames lookup from Geofield widget settings'
+  mapping:
+    foo:
+      type: string
+      label: Foo

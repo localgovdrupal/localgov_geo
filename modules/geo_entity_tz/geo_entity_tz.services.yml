@@ -1,0 +1,4 @@
+services:
+  geo_entity_tz.geonames_timezone:
+    class: Drupal\geo_entity_tz\GeonamesTimezone
+    arguments: ['@http_client', '@config.factory']
