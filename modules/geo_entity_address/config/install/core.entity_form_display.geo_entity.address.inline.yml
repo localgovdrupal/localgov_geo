@@ -9,8 +9,8 @@ dependencies:
     - field.field.geo_entity.address.postal_address
     - geo_entity.geo_entity_type.address
   module:
-    - geofield_map
     - geo_entity_address
+    - leaflet
     - text
 id: geo_entity.address.inline
 targetEntityType: geo_entity
@@ -26,48 +26,136 @@ content:
       placeholder: ''
     third_party_settings: {  }
   location:
-    type: geofield_map
+    type: leaflet_widget_default
     weight: 1
     region: content
     settings:
-      html5_geolocation: false
-      default_value:
-        lat: !!float 0
-        lon: !!float 0
-      map_library: leaflet
-      map_google_api_key: ''
-      map_google_places:
-        places_control: false
-        places_additional_options: ''
-      map_dimensions:
-        width: 100%
-        height: 450px
-      map_type_google: roadmap
-      map_type_leaflet: OpenStreetMap_Mapnik
-      map_type_selector: true
-      zoom_level: 5
-      zoom:
-        start: 6
-        focus: 12
-        min: 0
-        max: 22
-      click_to_find_marker: false
-      click_to_place_marker: false
-      hide_coordinates: false
-      geoaddress_field:
-        field: '0'
-        hidden: false
-        disabled: true
-      map_geocoder:
-        control: 0
+      map:
+        leaflet_map: 'OSM Mapnik'
+        height: 400
+        auto_center: 1
+        map_position:
+          force: false
+          center:
+            lat: 0.0
+            lon: 0.0
+          zoom: 12
+          minZoom: 1
+          maxZoom: 18
+          zoomFiner: 0
+        scroll_zoom_enabled: 1
+      input:
+        show: false
+        readonly: false
+      toolbar:
+        position: topright
+        marker: defaultMarker
+        drawPolyline: false
+        drawRectangle: false
+        drawPolygon: false
+        drawCircle: false
+        drawText: false
+        editMode: false
+        dragMode: true
+        cutPolygon: false
+        removalMode: true
+        rotateMode: false
+      reset_map:
+        control: false
+        options: '{"position":"topleft","title":"Reset View"}'
+      locate:
+        control: false
+        options: '{"position":"topright","setView":"untilPanOrZoom","returnToPrevBounds":true,"keepCurrentZoomLevel":true,"strings":{"title":"Locate my position"}}'
+        automatic: false
+      fullscreen:
+        control: false
+        options: '{"position":"topleft","pseudoFullscreen":false}'
+      path: '{"color":"#3388ff","opacity":"1.0","stroke":true,"weight":3,"fill":"depends","fillColor":"*","fillOpacity":"0.2","radius":"6"}'
+      geocoder:
+        control: false
         settings:
+          position: topright
+          input_size: 20
           providers:
+            file:
+              weight: 0
+              checked: false
+            gpx_file:
+              weight: 0
+              checked: false
+            geojson_file:
+              weight: 0
+              checked: false
+            kml_file:
+              weight: 0
+              checked: false
             localgov_default_osm:
               weight: 0
-              checked: true
+              checked: false
           min_terms: 4
           delay: 800
+          zoom: 16
+          popup: false
           options: ''
+      geometry_validation: 0
+      multiple_map: false
+      leaflet_map: 'OSM Mapnik'
+      height: 400
+      height_unit: px
+      hide_empty_map: false
+      disable_wheel: false
+      gesture_handling: false
+      popup: false
+      popup_content: ''
+      leaflet_popup:
+        value: ''
+        options: '{"maxWidth":"300","minWidth":"50", "autoPan": true}'
+        view_mode: full
+        control: false
+        content: ''
+      leaflet_tooltip:
+        value: ''
+        options: '{"permanent":false,"direction":"center"}'
+      map_position:
+        force: false
+        center:
+          lat: 0
+          lon: 0
+        zoom: 12
+        minZoom: 1
+        maxZoom: 18
+        zoomFiner: 0
+      weight: null
+      icon:
+        iconType: marker
+        iconUrl: ''
+        shadowUrl: ''
+        className: ''
+        iconSize:
+          x: null
+          'y': null
+        iconAnchor:
+          x: null
+          'y': null
+        shadowSize:
+          x: null
+          'y': null
+        shadowAnchor:
+          x: null
+          'y': null
+        popupAnchor:
+          x: null
+          'y': null
+        html: '<div></div>'
+        html_class: leaflet-map-divicon
+        circle_marker_options: '{"radius": 100, "color": "red", "fillColor": "#f03", "fillOpacity": 0.5}'
+      leaflet_markercluster:
+        control: false
+        options: '{"spiderfyOnMaxZoom":true,"showCoverageOnHover":true,"removeOutsideVisibleBounds": false}'
+        excluded: false
+        include_path: false
+      feature_properties:
+        values: ''
     third_party_settings: {  }
   postal_address:
     type: geo_entity_address

@@ -51,6 +51,8 @@ function geo_entity_field_widget_complete_entity_browser_entity_reference_form_a
 /**
  * After build geofield_map element.
  *
+ * Legacy, but kept for support for geofield_map if remaining or swapped in.
+ *
  * @see geo_entity_field_widget_form_alter()
  */
 function _geo_entity_geofield_widget_alter($element) {

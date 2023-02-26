@@ -9,7 +9,6 @@
         "drupal/entity_browser": "^2.9",
         "drupal/geocoder": "^4.4",
         "drupal/geofield": "^1.52",
-        "drupal/geofield_map": "^3.0.7",
         "drupal/inline_entity_form": "^1.0-rc14",
         "drupal/leaflet": "^10.0",
         "drupal/token": "^1.11",

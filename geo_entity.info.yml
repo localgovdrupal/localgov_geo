@@ -9,7 +9,6 @@ dependencies:
   - entity_browser:entity_browser
   - entity_browser:entity_browser_entity_form
   - geofield:geofield
-  - geofield_map:geofield_map
   - leaflet:leaflet
   - token:token
 configure: entity.geo_entity_type.collection
