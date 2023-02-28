@@ -37,7 +37,7 @@ class RolesIntegrationTest extends KernelTestBase {
     parent::setUp();
     $this->installConfig([
       'user',
-      'localgov_roles'
+      'localgov_roles',
     ]);
   }
 
