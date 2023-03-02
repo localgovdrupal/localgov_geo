@@ -9,11 +9,3 @@ geo_entity_tz.settings:
     token:
       type: string
       label: 'Premium account token'
-
-field.widget.settings.geo_entity_tz_geofield_geonames:
-  type: mapping
-  label: 'Geonames lookup from Geofield widget settings'
-  mapping:
-    foo:
-      type: string
-      label: Foo

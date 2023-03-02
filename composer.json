@@ -12,6 +12,7 @@
         "drupal/inline_entity_form": "^1.0-rc14",
         "drupal/leaflet": "^10.0",
         "drupal/token": "^1.11",
-        "geocoder-php/nominatim-provider": "^5.6"
+        "geocoder-php/nominatim-provider": "^5.6",
+        "geocoder-php/photon-provider": "^5.0"
     }
 }
