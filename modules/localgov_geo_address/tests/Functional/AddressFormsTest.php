@@ -3,7 +3,7 @@
 namespace Drupal\Tests\localgov_geo_address\Functional;
 
 use Drupal\Component\Utility\Html;
-use Drupal\localgov_geo\Entity\LocalgovGeo;
+use Drupal\geo_entity\Entity\GeoEntity;
 use Drupal\Tests\BrowserTestBase;
 
 /**
@@ -14,10 +14,14 @@ use Drupal\Tests\BrowserTestBase;
 class AddressFormsTest extends BrowserTestBase {
 
   /**
-   * Set to TRUE to strict check all configuration saved.
+   * Disable schema checking, for now.
+   *
+   * Pending:-
+   * https://www.drupal.org/project/leaflet/issues/3344455
    *
    * @var bool
    */
+  protected $strictConfigSchema = FALSE;
 
   /**
    * {@inheritdoc}
@@ -27,7 +31,9 @@ class AddressFormsTest extends BrowserTestBase {
     'text',
     'field_ui',
     'localgov_geo',
+    'geo_entity',
     'localgov_geo_address',
+    'geo_entity_address',
     'token',
     'geocoder',
     'geofield_map',
@@ -88,11 +94,13 @@ class AddressFormsTest extends BrowserTestBase {
     $locality = $this->randomString();
     $post_code = 'W1 1AA';
     $this->drupalGet('/admin/content/geo/add/address');
+    // @todo this is up for debate. At the moment having the default is causing
+    // issues. But at the same time having to pick a country is too.
+    $page->fillField('postal_address[0][address][country_code]', 'GB');
     $page->fillField('postal_address[0][address][address_line1]', $line_1);
     $page->fillField('postal_address[0][address][locality]', $locality);
     $page->fillField('postal_address[0][address][postal_code]', $post_code);
-    $page->fillField('location[0][value][lat]', '52.123456');
-    $page->fillField('location[0][value][lon]', '0.987654');
+    $page->fillField('location[0][value]', '{"type":"Point","coordinates":[0.987654,52.123456]}');
     $page->fillField('accessibility[0][value]', $this->randomString());
     $page->pressButton('Save');
 
@@ -103,7 +111,7 @@ class AddressFormsTest extends BrowserTestBase {
     $assert_session->pageTextContains('New geo');
 
     // Token generated label.
-    $geo = LocalgovGeo::load(1);
+    $geo = GeoEntity::load(1);
     $this->assertEquals("$line_1\n$locality\n$post_code\nUnited Kingdom", $geo->label->value);
   }
 
