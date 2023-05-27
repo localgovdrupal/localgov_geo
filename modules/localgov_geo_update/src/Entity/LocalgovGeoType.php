@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\localgov_geo\Entity;
+namespace Drupal\localgov_geo_update\Entity;
 
 use Drupal\Core\Config\Entity\ConfigEntityBundleBase;
 
@@ -11,6 +11,7 @@ use Drupal\Core\Config\Entity\ConfigEntityBundleBase;
  *   id = "localgov_geo_type",
  *   label = @Translation("Geo type"),
  *   bundle_of = "localgov_geo",
+ *   provider = "localgov_geo",
  *   config_prefix = "localgov_geo_type",
  *   entity_keys = {
  *     "id" = "id",

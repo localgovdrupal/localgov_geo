@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\localgov_geo\Entity;
+namespace Drupal\localgov_geo_update\Entity;
 
 use Drupal\Component\Render\PlainTextOutput;
 use Drupal\Core\Entity\EntityChangedTrait;
@@ -8,7 +8,6 @@ use Drupal\Core\Entity\EntityStorageInterface;
 use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Entity\RevisionableContentEntityBase;
 use Drupal\Core\Field\BaseFieldDefinition;
-use Drupal\localgov_geo\LocalgovGeoInterface;
 use Drupal\user\UserInterface;
 
 /**
@@ -40,7 +39,7 @@ use Drupal\user\UserInterface;
  *   bundle_entity_type = "localgov_geo_type",
  * )
  */
-class LocalgovGeo extends RevisionableContentEntityBase implements LocalgovGeoInterface {
+class LocalgovGeo extends RevisionableContentEntityBase {
 
   use EntityChangedTrait;
 

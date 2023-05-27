@@ -1,0 +1,106 @@
+<?php
+
+/**
+ * @file
+ * Update hooks to move to geo_entity.
+ */
+
+use Drupal\field\FieldStorageConfigInterface;
+use Drupal\geo_entity\Entity\GeoEntity;
+use Drupal\geo_entity\Entity\GeoEntityType;
+
+/**
+ * Ensure geo_entity modules enabled.
+ */
+function localgov_geo_update_update_8001() {
+  $enabled = [];
+  $module_handler = \Drupal::service('module_handler');
+  $module_installer = \Drupal::service('module_installer');
+  $module_installer->install('geo_entity');
+  $enabled[] = \t('Geo entity');
+  if ($module_handler->moduleExists('localgov_geo_address')) {
+    $module_installer->install('geo_entity_address');
+    $enabled[] = \t('Geo entity: address');
+  }
+  if ($module_handler->moduleExists('localgov_geo_area')) {
+    $module_installer->install('geo_entity_area');
+    $enabled[] = \t('Geo entity: area');
+  }
+  
+  return t("Enabled @modules.", ['@modules' => implode(', ', $enabled)]);
+}
+
+/**
+ * Ensure equivalent geo_entity bundles to localgov_geo.
+ */
+function localgov_geo_update_update_8002() {
+  $localgov_storage = \Drupal::entityTypeManager()->getStorage('localgov_geo_type');
+  $geo_storage = \Drupal::entityTypeManager()->getStorage('geo_entity_type');
+  foreach ($localgov_storage->loadMultiple() as $localgov_type) {
+    // Ensure properties on geo_entity type are the same.
+    $geo_type = $geo_storage->load($localgov_type->id());
+    $geo_type_values = $localgov_type->toArray();
+    if (!empty($geo_type_values['label_token'])) {
+      // Updated token.
+      $geo_type_values['label_token'] = str_replace('localgov_geo', 'geo_entity', $geo_type_values['label_token']);
+    }
+    if (empty($geo_type)) {
+      $geo_type = GeoEntityType::create($geo_type_values);
+    }
+    else {
+      foreach ($geo_type_values as $property => $value) {
+        if (!in_array($property, ['uuid', '_core'])) {
+          $geo_type->set($property, $value);
+        }
+      }
+    }
+    $geo_type->save();
+  }
+}
+
+/**
+ * Recreate localgov_geo as geo entities.
+ */
+function localgov_geo_update_update_8003(&$sandbox) {
+  // Set up the batch by retrieving all of the IDs.
+  $storage = \Drupal::entityTypeManager()->getStorage('localgov_geo');
+  if (!isset($sandbox['progress'])) {
+    $sandbox['ids'] = $storage->getQuery()->accessCheck(FALSE)->execute();
+    $sandbox['max'] = count($sandbox['ids']);
+    $sandbox['progress'] = 0;
+  }
+
+  // Try to update 25 entities at a time.
+  $ids = array_slice($sandbox['ids'], $sandbox['progress'], 25);
+
+  foreach ($storage->loadMultiple($ids) as $entity) {
+    $geo = GeoEntity::create($entity->toArray());
+    $geo->save();
+    $entity->delete();
+    $sandbox['progress']++;
+  }
+
+  // Try to update the percentage but avoid division by zero.
+  $sandbox['#finished'] = empty($sandbox['max']) ? 1 : ($sandbox['progress'] / $sandbox['max']);
+
+  // Show a status update for the current progress.
+  return t("Updated the label for @progress out of @max geo entities.", ['@progress' => $sandbox['progress'], '@max' => $sandbox['max']]);
+}
+
+/**
+ * Update reference fields to use geo_entity.
+ */
+function localgov_geo_update_update_8004() {
+  $fields = [];
+  $storage = \Drupal::entityTypeManager()->getStorage('field_storage_config');
+  foreach ($storage->loadMultiple() as $field) {
+    assert($field instanceof FieldStorageConfigInterface);
+    if ($field->getType() == 'entity_reference' && $field->getSetting('target_type') == 'localgov_geo') {
+      $field->setSetting('target_type', 'geo_entity');
+      $field->save();
+      $fields[] = $field->getLabel() . ' (' . $field->id() . ')';
+    }
+  }
+  
+  return t("Updated fields @fields.", ['@fields' => implode(', ', $fields)]);
+}
