@@ -59,9 +59,49 @@ function localgov_geo_update_update_8002() {
 }
 
 /**
+ * Ensure geo_entity bundles have fields of localgov_geo.
+ */
+function localgov_geo_update_8003() {
+  $field_storage = \Drupal::entityTypeManager()->getStorage('field_storage_config');
+  $field_config = \Drupal::entityTypeManager()->getStorage('field_config');
+  foreach ($field_storage->loadByProperties(['entity_type' => 'localgov_geo']) as $lgd_field) {
+    $geo_field = $field_storage->loadByProperties(['field_name' => $lgd_field->getName(), 'entity_type' => 'geo_entity']);
+    $field_array = $lgd_field->toArray();
+    unset($field_array['uuid'], $field_array['id'], $field_array['_core'], $field_array['dependencies']);
+    $field_array['entity_type'] = 'geo_entity';
+    if (empty($geo_field)) {
+      $geo_field = $field_storage->create($field_array);
+    }
+    else {
+      $geo_field = reset($geo_field);
+      foreach ($field_array as $property => $value) {
+        $geo_field->set($property, $value);
+      }
+    }
+    $geo_field->save();
+    foreach ($field_config->loadByProperties(['field_name' => $lgd_field->getName(), 'entity_type' => 'localgov_geo']) as $lgd_instance) {
+      $geo_instance = $field_config->loadByProperties(['field_name' => $lgd_instance->getName(), 'entity_type' => 'geo_entity', 'bundle' => $lgd_instance->getTargetBundle()]);
+      $instance_array = $lgd_instance->toArray();
+      unset($instance_array['uuid'], $instance_array['id'], $instance_array['_core'], $instance_array['dependencies']);
+      $instance_array['entity_type'] = 'geo_entity';
+      if (empty($geo_instance)) {
+        $geo_instance = $field_config->create($instance_array);
+      }
+      else {
+        $geo_instance = reset($geo_instance);
+        foreach ($instance_array as $property => $value) {
+          $geo_instance->set($property, $value);
+        }
+      }
+      $geo_instance->save();
+    }
+  }
+}
+
+/**
  * Recreate localgov_geo as geo entities.
  */
-function localgov_geo_update_update_8003(&$sandbox) {
+function localgov_geo_update_update_8004(&$sandbox) {
   // Set up the batch by retrieving all of the IDs.
   $storage = \Drupal::entityTypeManager()->getStorage('localgov_geo');
   if (!isset($sandbox['progress'])) {
@@ -90,7 +130,7 @@ function localgov_geo_update_update_8003(&$sandbox) {
 /**
  * Update reference fields to use geo_entity.
  */
-function localgov_geo_update_update_8004() {
+function localgov_geo_update_update_8005() {
   $fields = [];
   $storage = \Drupal::entityTypeManager()->getStorage('field_storage_config');
   foreach ($storage->loadMultiple() as $field) {
