@@ -4,4 +4,4 @@ description: 'Geo bundle for storing polygons.'
 package: LocalGov Drupal
 core_version_requirement: ^9 || ^10
 dependencies:
-  - geo_entity:geo_enity_area
+  - geo_entity:geo_entity_area
