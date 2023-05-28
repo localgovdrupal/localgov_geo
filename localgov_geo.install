@@ -580,3 +580,11 @@ function localgov_geo_update_8809() {
     }
   }
 }
+
+/**
+ * Enable the empty upgrade module in advance of using it in Drupal 10.
+ */
+function localgov_geo_update_8810() {
+  $module_installer = \Drupal::service('module_installer');
+  $module_installer->install(['localgov_geo_update']);
+}
