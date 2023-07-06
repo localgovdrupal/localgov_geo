@@ -16,14 +16,14 @@ function localgov_geo_update_update_8001() {
   $enabled = [];
   $module_handler = \Drupal::service('module_handler');
   $module_installer = \Drupal::service('module_installer');
-  $module_installer->install('geo_entity');
+  $module_installer->install(['geo_entity']);
   $enabled[] = \t('Geo entity');
   if ($module_handler->moduleExists('localgov_geo_address')) {
-    $module_installer->install('geo_entity_address');
+    $module_installer->install(['geo_entity_address']);
     $enabled[] = \t('Geo entity: address');
   }
   if ($module_handler->moduleExists('localgov_geo_area')) {
-    $module_installer->install('geo_entity_area');
+    $module_installer->install(['geo_entity_area']);
     $enabled[] = \t('Geo entity: area');
   }
   
