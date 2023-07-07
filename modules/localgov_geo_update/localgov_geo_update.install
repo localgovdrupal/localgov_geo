@@ -181,38 +181,5 @@ function localgov_geo_update_update_8005() {
  */
 function localgov_geo_update_update_8806() {
   $view = View::load('localgov_geo_library');
-  $view_config = $view->toArray();
-  $view_config['base_table'] = 'geo_entity_field_data';
-  $view_config['label'] = 'LocalGov Geo Library';
-  foreach ($view_config['display'] as $display_id => $display_config) {
-    if (isset($display_config['display_options']['fields'])) {
-      foreach ($display_config['display_options']['fields'] as $field_name => $field_config) {
-        if (isset($field_config['table']) && $field_config['table'] == 'localgov_geo') {
-          $view_config['display'][$display_id]['display_options']['fields'][$field_name]['table'] = 'geo_entity';
-        }
-        if (isset($field_config['entity_type']) && $field_config['entity_type'] == 'localgov_geo') {
-          $view_config['display'][$display_id]['display_options']['fields'][$field_name]['entity_type'] = 'geo_entity';
-        }
-        if (isset($field_config['table']) && $field_config['table'] == 'localgov_geo_field_data') {
-          $view_config['display'][$display_id]['display_options']['fields'][$field_name]['table'] = 'geo_entity_field_data';
-        }
-      }
-    }
-    if (isset($display_config['display_options']['filters'])) {
-      foreach ($display_config['display_options']['filters'] as $filter_name => $filter_config) {
-        if (isset($filter_config['table']) && $filter_config['table'] == 'localgov_geo') {
-          $view_config['display'][$display_id]['display_options']['filters'][$field_name]['table'] = 'geo_entity';
-        }
-        if (isset($filter_config['table']) && $filter_config['table'] == 'localgov_geo_field_data') {
-          $view_config['display'][$display_id]['display_options']['filters'][$filter_name]['table'] = 'geo_entity_field_data';
-        }
-        if (isset($filter_config['entity_type']) && $filter_config['entity_type'] == 'localgov_geo') {
-          $view_config['display'][$display_id]['display_options']['filters'][$field_name]['entity_type'] = 'geo_entity';
-        }
-      }
-    }
-  }
   $view->delete();
-  $view = $view::create($view_config);
-  $view->save();
 }
