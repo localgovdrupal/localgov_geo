@@ -5,9 +5,12 @@
  * Update hooks to move to geo_entity.
  */
 
+use Drupal\Core\Entity\Display\EntityFormDisplayInterface;
+use Drupal\field\FieldConfigInterface;
 use Drupal\field\FieldStorageConfigInterface;
 use Drupal\geo_entity\Entity\GeoEntity;
 use Drupal\geo_entity\Entity\GeoEntityType;
+use Drupal\views\Entity\View;
 
 /**
  * Ensure geo_entity modules enabled.
@@ -128,7 +131,7 @@ function localgov_geo_update_update_8004(&$sandbox) {
 }
 
 /**
- * Update reference fields to use geo_entity.
+ * Update reference fields to use geo_entity and its library browser.
  */
 function localgov_geo_update_update_8005() {
   $fields = [];
@@ -136,11 +139,80 @@ function localgov_geo_update_update_8005() {
   foreach ($storage->loadMultiple() as $field) {
     assert($field instanceof FieldStorageConfigInterface);
     if ($field->getType() == 'entity_reference' && $field->getSetting('target_type') == 'localgov_geo') {
+      $field_handler_settings = [];
       $field->setSetting('target_type', 'geo_entity');
+      // Find all form modes and update the browser.
+      $bundle_storage = \Drupal::entityTypeManager()->getStorage('field_config');
+      foreach ($bundle_storage->loadByProperties([
+        'entity_type' => $field->getTargetEntityTypeId(),
+        'field_name' => $field->getName(),
+      ]) as $field_config) {
+        assert($field_config instanceof FieldConfigInterface);
+        $field_handler_settings[$field_config->id()] = $field_config->getSetting('handler_settings');
+        // Field config itself does not need updating. But the form and display.
+        $display_storage = \Drupal::entityTypeManager()->getStorage('entity_form_display');
+        foreach ($display_storage->loadByProperties([
+          'targetEntityType' => $field_config->getTargetEntityTypeId(),
+          'bundle' => $field_config->getTargetBundle(),
+        ]) as $display) {
+          assert($display instanceof EntityFormDisplayInterface);
+          $component = $display->getComponent($field->getName());
+          $component['settings']['entity_browser'] = 'geo_entity_library';
+          $display->setComponent($field->getName(), $component);
+          $display->save();
+        }
+      }
       $field->save();
+      foreach ($field_handler_settings as $field_config_id => $setting) {
+        $field_config = $bundle_storage->load($field_config_id);
+        assert($field_config instanceof FieldConfigInterface);
+        $field_config->setSetting('handler_settings', $setting);
+        $field_config->save();
+      }
       $fields[] = $field->getLabel() . ' (' . $field->id() . ')';
     }
   }
   
   return t("Updated fields @fields.", ['@fields' => implode(', ', $fields)]);
+}
+
+/**
+ * Update the entity browser library.
+ */
+function localgov_geo_update_update_8806() {
+  $view = View::load('localgov_geo_library');
+  $view_config = $view->toArray();
+  $view_config['base_table'] = 'geo_entity_field_data';
+  $view_config['label'] = 'LocalGov Geo Library';
+  foreach ($view_config['display'] as $display_id => $display_config) {
+    if (isset($display_config['display_options']['fields'])) {
+      foreach ($display_config['display_options']['fields'] as $field_name => $field_config) {
+        if (isset($field_config['table']) && $field_config['table'] == 'localgov_geo') {
+          $view_config['display'][$display_id]['display_options']['fields'][$field_name]['table'] = 'geo_entity';
+        }
+        if (isset($field_config['entity_type']) && $field_config['entity_type'] == 'localgov_geo') {
+          $view_config['display'][$display_id]['display_options']['fields'][$field_name]['entity_type'] = 'geo_entity';
+        }
+        if (isset($field_config['table']) && $field_config['table'] == 'localgov_geo_field_data') {
+          $view_config['display'][$display_id]['display_options']['fields'][$field_name]['table'] = 'geo_entity_field_data';
+        }
+      }
+    }
+    if (isset($display_config['display_options']['filters'])) {
+      foreach ($display_config['display_options']['filters'] as $filter_name => $filter_config) {
+        if (isset($filter_config['table']) && $filter_config['table'] == 'localgov_geo') {
+          $view_config['display'][$display_id]['display_options']['filters'][$field_name]['table'] = 'geo_entity';
+        }
+        if (isset($filter_config['table']) && $filter_config['table'] == 'localgov_geo_field_data') {
+          $view_config['display'][$display_id]['display_options']['filters'][$filter_name]['table'] = 'geo_entity_field_data';
+        }
+        if (isset($filter_config['entity_type']) && $filter_config['entity_type'] == 'localgov_geo') {
+          $view_config['display'][$display_id]['display_options']['filters'][$field_name]['entity_type'] = 'geo_entity';
+        }
+      }
+    }
+  }
+  $view->delete();
+  $view = $view::create($view_config);
+  $view->save();
 }
