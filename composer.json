@@ -9,7 +9,7 @@
 	"drupal/geofield_map": "^2.66"
     },
     "require-dev": {
-        "localgovdrupal/localgov_core": "^2.2"
+        "localgovdrupal/localgov_core": "^2.12"
     },
     "suggest": {
         "localgovdrupal/localgov_os_places_geocoder_provider": "1.x-dev"
