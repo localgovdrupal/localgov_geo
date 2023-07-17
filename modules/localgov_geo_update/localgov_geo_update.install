@@ -29,7 +29,7 @@ function localgov_geo_update_update_8001() {
     $module_installer->install(['geo_entity_area']);
     $enabled[] = \t('Geo entity: area');
   }
-  
+
   return t("Enabled @modules.", ['@modules' => implode(', ', $enabled)]);
 }
 
@@ -68,7 +68,10 @@ function localgov_geo_update_8003() {
   $field_storage = \Drupal::entityTypeManager()->getStorage('field_storage_config');
   $field_config = \Drupal::entityTypeManager()->getStorage('field_config');
   foreach ($field_storage->loadByProperties(['entity_type' => 'localgov_geo']) as $lgd_field) {
-    $geo_field = $field_storage->loadByProperties(['field_name' => $lgd_field->getName(), 'entity_type' => 'geo_entity']);
+    $geo_field = $field_storage->loadByProperties([
+      'field_name' => $lgd_field->getName(),
+      'entity_type' => 'geo_entity',
+    ]);
     $field_array = $lgd_field->toArray();
     unset($field_array['uuid'], $field_array['id'], $field_array['_core'], $field_array['dependencies']);
     $field_array['entity_type'] = 'geo_entity';
@@ -82,8 +85,15 @@ function localgov_geo_update_8003() {
       }
     }
     $geo_field->save();
-    foreach ($field_config->loadByProperties(['field_name' => $lgd_field->getName(), 'entity_type' => 'localgov_geo']) as $lgd_instance) {
-      $geo_instance = $field_config->loadByProperties(['field_name' => $lgd_instance->getName(), 'entity_type' => 'geo_entity', 'bundle' => $lgd_instance->getTargetBundle()]);
+    foreach ($field_config->loadByProperties([
+      'field_name' => $lgd_field->getName(),
+      'entity_type' => 'localgov_geo',
+    ]) as $lgd_instance) {
+      $geo_instance = $field_config->loadByProperties([
+        'field_name' => $lgd_instance->getName(),
+        'entity_type' => 'geo_entity',
+        'bundle' => $lgd_instance->getTargetBundle(),
+      ]);
       $instance_array = $lgd_instance->toArray();
       unset($instance_array['uuid'], $instance_array['id'], $instance_array['_core'], $instance_array['dependencies']);
       $instance_array['entity_type'] = 'geo_entity';
@@ -127,7 +137,10 @@ function localgov_geo_update_update_8004(&$sandbox) {
   $sandbox['#finished'] = empty($sandbox['max']) ? 1 : ($sandbox['progress'] / $sandbox['max']);
 
   // Show a status update for the current progress.
-  return t("Updated the label for @progress out of @max geo entities.", ['@progress' => $sandbox['progress'], '@max' => $sandbox['max']]);
+  return t("Updated the label for @progress out of @max geo entities.", [
+    '@progress' => $sandbox['progress'],
+    '@max' => $sandbox['max'],
+  ]);
 }
 
 /**
@@ -172,7 +185,7 @@ function localgov_geo_update_update_8005() {
       $fields[] = $field->getLabel() . ' (' . $field->id() . ')';
     }
   }
-  
+
   return t("Updated fields @fields.", ['@fields' => implode(', ', $fields)]);
 }
 

@@ -21,7 +21,7 @@ class AddressFormsTest extends BrowserTestBase {
    *
    * @var bool
    */
-  protected $strictConfigSchema = FALSE;
+  protected $strictConfigSchema = FALSE; // phpcs:ignore.
 
   /**
    * {@inheritdoc}
