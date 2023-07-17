@@ -6,9 +6,9 @@
  */
 
 use Drupal\Core\Config\Config;
-use Drupal\user\RoleInterface;
 use Drupal\Core\Field\BaseFieldDefinition;
 use Drupal\localgov_geo\Entity\LocalgovGeo;
+use Drupal\user\RoleInterface;
 use Symfony\Component\Yaml\Yaml;
 
 /**
