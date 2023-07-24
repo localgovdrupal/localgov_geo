@@ -1,6 +1,0 @@
-langcode: en
-status: true
-dependencies: {  }
-id: area
-label: Area
-label_token: ''

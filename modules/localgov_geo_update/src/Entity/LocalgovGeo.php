@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\localgov_geo\Entity;
+namespace Drupal\localgov_geo_update\Entity;
 
 use Drupal\Component\Render\PlainTextOutput;
 use Drupal\Core\Entity\EntityChangedTrait;
@@ -8,7 +8,6 @@ use Drupal\Core\Entity\EntityStorageInterface;
 use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Entity\RevisionableContentEntityBase;
 use Drupal\Core\Field\BaseFieldDefinition;
-use Drupal\localgov_geo\LocalgovGeoInterface;
 use Drupal\user\UserInterface;
 
 /**
@@ -19,27 +18,11 @@ use Drupal\user\UserInterface;
  *   label = @Translation("Geo"),
  *   label_collection = @Translation("Geos"),
  *   bundle_label = @Translation("Geo type"),
- *   handlers = {
- *     "view_builder" = "Drupal\Core\Entity\EntityViewBuilder",
- *     "list_builder" = "Drupal\localgov_geo\LocalgovGeoListBuilder",
- *     "views_data" = "Drupal\views\EntityViewsData",
- *     "access" = "Drupal\localgov_geo\LocalgovGeoAccessControlHandler",
- *     "form" = {
- *       "add" = "Drupal\localgov_geo\Form\LocalgovGeoForm",
- *       "edit" = "Drupal\localgov_geo\Form\LocalgovGeoForm",
- *       "delete" = "Drupal\Core\Entity\ContentEntityDeleteForm"
- *     },
- *     "route_provider" = {
- *       "html" = "Drupal\Core\Entity\Routing\AdminHtmlRouteProvider",
- *     }
- *   },
  *   base_table = "localgov_geo",
  *   data_table = "localgov_geo_field_data",
  *   revision_table = "localgov_geo_revision",
  *   revision_data_table = "localgov_geo_field_revision",
- *   show_revision_ui = TRUE,
  *   translatable = TRUE,
- *   admin_permission = "access geo overview",
  *   entity_keys = {
  *     "id" = "id",
  *     "revision" = "revision_id",
@@ -53,19 +36,10 @@ use Drupal\user\UserInterface;
  *     "revision_created" = "revision_timestamp",
  *     "revision_log_message" = "revision_log"
  *   },
- *   links = {
- *     "add-form" = "/admin/content/geo/add/{localgov_geo_type}",
- *     "add-page" = "/admin/content/geo/add",
- *     "canonical" = "/admin/content/geo/{localgov_geo}",
- *     "edit-form" = "/admin/content/geo/{localgov_geo}/edit",
- *     "delete-form" = "/admin/content/geo/{localgov_geo}/delete",
- *     "collection" = "/admin/content/geo"
- *   },
  *   bundle_entity_type = "localgov_geo_type",
- *   field_ui_base_route = "entity.localgov_geo_type.edit_form"
  * )
  */
-class LocalgovGeo extends RevisionableContentEntityBase implements LocalgovGeoInterface {
+class LocalgovGeo extends RevisionableContentEntityBase {
 
   use EntityChangedTrait;
 
