@@ -196,3 +196,32 @@ function localgov_geo_update_update_8806() {
   $view = View::load('localgov_geo_library');
   $view->delete();
 }
+
+/**
+ * Update views fields.
+ */
+function localgov_geo_update_update_8807() {
+  $views = View::loadMultiple();
+  foreach ($views as $view) {
+    $altered = FALSE;
+    $displays = $view->get('display');
+    foreach ($displays as $display_id => $display) {
+      if (isset($display['display_options']['fields'])) {
+        foreach ($display['display_options']['fields'] as $field_name => $field) {
+          if (isset($field['entity_type']) && $field['entity_type'] == 'localgov_geo') {
+            $displays[$display_id]['display_options']['fields'][$field_name]['entity_type'] = 'geo_entity';
+            $altered = TRUE;
+          }
+          if (isset($field['table']) && $field['table'] == 'search_api_entity_localgov_geo') {
+            $displays[$display_id]['display_options']['fields'][$field_name]['table'] = 'search_api_entity_geo_entity';
+            $altered = TRUE;
+          }
+        }
+      }
+    }
+    if ($altered) {
+      $view->set('display', $displays);
+      $view->save();
+    }
+  }
+}
