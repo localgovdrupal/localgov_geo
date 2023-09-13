@@ -64,7 +64,7 @@ function localgov_geo_update_update_8002() {
 /**
  * Ensure geo_entity bundles have fields of localgov_geo.
  */
-function localgov_geo_update_8003() {
+function localgov_geo_update_update_8003() {
   $field_storage = \Drupal::entityTypeManager()->getStorage('field_storage_config');
   $field_config = \Drupal::entityTypeManager()->getStorage('field_config');
   foreach ($field_storage->loadByProperties(['entity_type' => 'localgov_geo']) as $lgd_field) {
