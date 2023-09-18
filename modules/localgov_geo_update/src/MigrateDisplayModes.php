@@ -2,6 +2,9 @@
 
 namespace Drupal\localgov_geo_update;
 
+use Drupal\Core\Entity\Entity\EntityFormDisplay;
+use Drupal\Core\Entity\Entity\EntityViewDisplay;
+
 /**
  * Migrates display modes for form and view from localgov_geo to geo_entity.
  */
@@ -22,11 +25,30 @@ class MigrateDisplayModes {
    */
   public static function migrate(string $bundle, string $type, string $name) {
 
+    // $type must be of type view or form.
+    if ($type != 'view' && $type != 'form') {
+      throw new \Exception('Only form and view display modes can be migrated');
+    }
+
     // Load the config.
     $config_manager = \Drupal::service('config.manager');
     $config_factory = $config_manager->getConfigFactory();
     $current_config_name = 'core.entity_' . $type . '_display.localgov_geo.' . $bundle . '.' . $name;
     $current_display_config = $config_factory->get($current_config_name);
+
+    // Load existing display mode to check that it is a valid display mode.
+    if ($type == 'view') {
+      $display = EntityViewDisplay::load('localgov_geo.' . $bundle . '.' . $name);
+    }
+    elseif ($type == 'form') {
+      $display = EntityFormDisplay::load('localgov_geo.' . $bundle . '.' . $name);
+    }
+
+    // Throw error if not a display mode.
+    if (!$display instanceof EntityFormDisplay && !$display instanceof EntityViewDisplay) {
+      throw new \Exception('Provided ' . $type . ' display mode ' . $current_config_name . ' is not defined for localgov_geo bundle ' . $bundle . '.');
+    }
+
     $new_config_name = 'core.entity_' . $type . '_display.geo_entity.' . $bundle . '.' . $name;
     $new_display_config = $config_factory->getEditable($new_config_name);
 

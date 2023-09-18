@@ -149,6 +149,16 @@ class UpdateLocalgovGeoTest extends BrowserTestBase {
     $this->assertSession()->pageTextContains('Parking zone ' . $new_geo['edit-localgov-update-test-id-0-value']);
     $this->assertSession()->pageTextContains($new_geo['edit-location-0-value']);
     $this->assertSession()->pageTextContains($new_geo['edit-localgov-update-test-details-0-value']);
+
+    $this->expectException(\Exception::class);
+    MigrateDisplayModes::migrate('update_test', 'view', 'undefined');
+
+    $this->expectException(\Exception::class);
+    MigrateDisplayModes::migrate('update_test', 'form', 'undefined');
+
+    $this->expectException(\Exception::class);
+    MigrateDisplayModes::migrate('update_test', 'rubbish', 'undefined');
+
   }
 
 }
