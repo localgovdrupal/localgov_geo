@@ -8,7 +8,6 @@
 use Drupal\Core\Entity\Display\EntityFormDisplayInterface;
 use Drupal\field\FieldConfigInterface;
 use Drupal\field\FieldStorageConfigInterface;
-use Drupal\geo_entity\Entity\GeoEntity;
 use Drupal\geo_entity\Entity\GeoEntityType;
 use Drupal\views\Entity\View;
 
@@ -30,7 +29,14 @@ function localgov_geo_update_update_8001() {
     $enabled[] = \t('Geo entity: area');
   }
 
-  return t("Enabled @modules.", ['@modules' => implode(', ', $enabled)]);
+  $is_terminal = PHP_SAPI === 'cli' && getenv('TERM');
+  [$magenta, $colour_off] = $is_terminal ? ["\033[35m", "\033[0m"] : ['', ''];
+  return t('Enabled @modules.  Please %magenta%action-msg%colour_off if you have not done so already.  `drush deploy` **afterwards** will convert localgov_geo entities into geo_entity entities.', [
+    '@modules'    => implode(', ', $enabled),
+    '%magenta'    => $magenta,
+    '%colour_off' => $colour_off,
+    '%action-msg' => '**export site configuration**',
+  ]);
 }
 
 /**
@@ -109,38 +115,6 @@ function localgov_geo_update_update_8003() {
       $geo_instance->save();
     }
   }
-}
-
-/**
- * Recreate localgov_geo as geo entities.
- */
-function localgov_geo_update_update_8004(&$sandbox) {
-  // Set up the batch by retrieving all of the IDs.
-  $storage = \Drupal::entityTypeManager()->getStorage('localgov_geo');
-  if (!isset($sandbox['progress'])) {
-    $sandbox['ids'] = $storage->getQuery()->accessCheck(FALSE)->execute();
-    $sandbox['max'] = count($sandbox['ids']);
-    $sandbox['progress'] = 0;
-  }
-
-  // Try to update 25 entities at a time.
-  $ids = array_slice($sandbox['ids'], $sandbox['progress'], 25);
-
-  foreach ($storage->loadMultiple($ids) as $entity) {
-    $geo = GeoEntity::create($entity->toArray());
-    $geo->save();
-    $entity->delete();
-    $sandbox['progress']++;
-  }
-
-  // Try to update the percentage but avoid division by zero.
-  $sandbox['#finished'] = empty($sandbox['max']) ? 1 : ($sandbox['progress'] / $sandbox['max']);
-
-  // Show a status update for the current progress.
-  return t("Updated the label for @progress out of @max geo entities.", [
-    '@progress' => $sandbox['progress'],
-    '@max' => $sandbox['max'],
-  ]);
 }
 
 /**
