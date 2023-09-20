@@ -2,6 +2,10 @@
 
 namespace Drupal\Tests\localgov_geo_update\Functional;
 
+use Drupal\Core\Entity\Entity\EntityFormDisplay;
+use Drupal\Core\Entity\Entity\EntityFormMode;
+use Drupal\Core\Entity\Entity\EntityViewDisplay;
+use Drupal\Core\Entity\Entity\EntityViewMode;
 use Drupal\geo_entity\Entity\GeoEntity;
 use Drupal\geo_entity\Entity\GeoEntityType;
 use Drupal\localgov_geo_update\Entity\LocalgovGeo;
@@ -150,15 +154,30 @@ class UpdateLocalgovGeoTest extends BrowserTestBase {
     $this->assertSession()->pageTextContains($new_geo['edit-location-0-value']);
     $this->assertSession()->pageTextContains($new_geo['edit-localgov-update-test-details-0-value']);
 
-    $this->expectException(\Exception::class);
-    MigrateDisplayModes::migrate('update_test', 'view', 'undefined');
+    // Migrate the remaining display modes.
+    // Execute the update hook.
+    localgov_geo_update_update_8809();
 
-    $this->expectException(\Exception::class);
-    MigrateDisplayModes::migrate('update_test', 'form', 'undefined');
+    // Load expected new display modes.
+    $map_view = EntityViewDisplay::load('geo_entity.update_test.map');
+    $map_base_mode = EntityViewMode::load('geo_entity.map');
+    $this->assertInstanceOf(EntityViewDisplay::class, $map_view);
+    $this->assertInstanceOf(EntityViewMode::class, $map_base_mode);
 
-    $this->expectException(\Exception::class);
-    MigrateDisplayModes::migrate('update_test', 'rubbish', 'undefined');
+    $meta_view = EntityViewDisplay::load('geo_entity.update_test.meta');
+    $meta_base_mode = EntityViewMode::load('geo_entity.meta');
+    $this->assertInstanceOf(EntityViewDisplay::class, $meta_view);
+    $this->assertInstanceOf(EntityViewMode::class, $meta_base_mode);
 
+    $inline_form_view = EntityFormDisplay::load('geo_entity.update_test.inline');
+    $inline_form_base_mode = EntityFormMode::load('geo_entity.inline');
+    $this->assertInstanceOf(EntityFormDisplay::class, $inline_form_view);
+    $this->assertInstanceOf(EntityFormMode::class, $inline_form_base_mode);
+
+    $label_form_view = EntityFormDisplay::load('geo_entity.update_test.label');
+    $label_form_base_mode = EntityFormMode::load('geo_entity.label');
+    $this->assertInstanceOf(EntityFormDisplay::class, $label_form_view);
+    $this->assertInstanceOf(EntityFormMode::class, $label_form_base_mode);
   }
 
 }

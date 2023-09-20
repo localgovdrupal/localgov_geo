@@ -10,6 +10,7 @@ use Drupal\field\FieldConfigInterface;
 use Drupal\field\FieldStorageConfigInterface;
 use Drupal\geo_entity\Entity\GeoEntity;
 use Drupal\geo_entity\Entity\GeoEntityType;
+use Drupal\localgov_geo_update\MigrateDisplayModes;
 use Drupal\views\Entity\View;
 
 /**
@@ -223,5 +224,27 @@ function localgov_geo_update_update_8807() {
       $view->set('display', $displays);
       $view->save();
     }
+  }
+}
+
+/**
+ * Migrate view and form display modes from localgov_geo to geo_entites.
+ */
+function localgov_geo_update_update_8809() {
+  $view_mode_ids = \Drupal::entityTypeManager()->getStorage('entity_view_display')
+    ->getQuery()
+    ->condition('targetEntityType', 'localgov_geo')
+    ->execute();
+  foreach ($view_mode_ids as $view_mode_id) {
+    [$bundle, $name] = array_slice(explode('.', $view_mode_id, 3), 1, 2);
+    MigrateDisplayModes::migrate($bundle, 'view', $name);
+  }
+  $form_mode_ids = \Drupal::entityTypeManager()->getStorage('entity_form_display')
+    ->getQuery()
+    ->condition('targetEntityType', 'localgov_geo')
+    ->execute();
+  foreach ($form_mode_ids as $form_mode_id) {
+    [$bundle, $name] = array_slice(explode('.', $form_mode_id, 3), 1, 2);
+    MigrateDisplayModes::migrate($bundle, 'form', $name);
   }
 }
