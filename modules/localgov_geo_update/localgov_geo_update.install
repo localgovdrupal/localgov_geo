@@ -230,7 +230,7 @@ function localgov_geo_update_update_8807() {
 /**
  * Migrate view and form display modes from localgov_geo to geo_entites.
  */
-function localgov_geo_update_update_8809() {
+function localgov_geo_update_update_8808() {
   $view_mode_ids = \Drupal::entityTypeManager()->getStorage('entity_view_display')
     ->getQuery()
     ->condition('targetEntityType', 'localgov_geo')

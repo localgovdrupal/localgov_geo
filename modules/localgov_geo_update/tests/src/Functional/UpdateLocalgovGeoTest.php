@@ -156,7 +156,7 @@ class UpdateLocalgovGeoTest extends BrowserTestBase {
 
     // Migrate the remaining display modes.
     // Execute the update hook.
-    localgov_geo_update_update_8809();
+    localgov_geo_update_update_8808();
 
     // Load expected new display modes.
     $map_view = EntityViewDisplay::load('geo_entity.update_test.map');
