@@ -133,6 +133,10 @@ class UpdateLocalgovGeoTest extends BrowserTestBase {
     $this->assertSession()->pageTextContains($localgov_geo_content['localgov_update_test_details']);
     $this->assertSession()->pageTextContains($localgov_geo_content['location']);
 
+    // Check default view display has a UUID.
+    $default_view = EntityViewDisplay::load('geo_entity.update_test.default');
+    $this->assertNotEmpty($default_view->get('uuid'));
+
     // Check the geo entity type add form has the fields visible.
     MigrateDisplayModes::migrate('update_test', 'form', 'default');
     $this->drupalLogin($this->adminUser);
@@ -140,6 +144,10 @@ class UpdateLocalgovGeoTest extends BrowserTestBase {
     $this->assertSession()->fieldEnabled('location[0][value]');
     $this->assertSession()->fieldEnabled('localgov_update_test_id[0][value]');
     $this->assertSession()->fieldEnabled('localgov_update_test_details[0][value]');
+
+    // Check the default form display has a UUID.
+    $default_form = EntityFormDisplay::load('geo_entity.update_test.default');
+    $this->assertNotEmpty($default_form->get('uuid'));
 
     // New geo values.
     $new_geo = [
@@ -163,21 +171,29 @@ class UpdateLocalgovGeoTest extends BrowserTestBase {
     $map_base_mode = EntityViewMode::load('geo_entity.map');
     $this->assertInstanceOf(EntityViewDisplay::class, $map_view);
     $this->assertInstanceOf(EntityViewMode::class, $map_base_mode);
+    $this->assertNotEmpty($map_view->get('uuid'));
+    $this->assertNotEmpty($map_base_mode->get('uuid'));
 
     $meta_view = EntityViewDisplay::load('geo_entity.update_test.meta');
     $meta_base_mode = EntityViewMode::load('geo_entity.meta');
     $this->assertInstanceOf(EntityViewDisplay::class, $meta_view);
     $this->assertInstanceOf(EntityViewMode::class, $meta_base_mode);
+    $this->assertNotEmpty($meta_view->get('uuid'));
+    $this->assertNotEmpty($meta_base_mode->get('uuid'));
 
     $inline_form_view = EntityFormDisplay::load('geo_entity.update_test.inline');
     $inline_form_base_mode = EntityFormMode::load('geo_entity.inline');
     $this->assertInstanceOf(EntityFormDisplay::class, $inline_form_view);
     $this->assertInstanceOf(EntityFormMode::class, $inline_form_base_mode);
+    $this->assertNotEmpty($inline_form_view->get('uuid'));
+    $this->assertNotEmpty($inline_form_base_mode->get('uuid'));
 
     $label_form_view = EntityFormDisplay::load('geo_entity.update_test.label');
     $label_form_base_mode = EntityFormMode::load('geo_entity.label');
     $this->assertInstanceOf(EntityFormDisplay::class, $label_form_view);
     $this->assertInstanceOf(EntityFormMode::class, $label_form_base_mode);
+    $this->assertNotEmpty($label_form_view->get('uuid'));
+    $this->assertNotEmpty($label_form_base_mode->get('uuid'));
   }
 
 }

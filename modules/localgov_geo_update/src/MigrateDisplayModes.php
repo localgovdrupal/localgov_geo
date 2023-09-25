@@ -55,7 +55,7 @@ class MigrateDisplayModes {
     static::migrateBaseDisplay($type, $name);
 
     $new_config_name = 'core.entity_' . $type . '_display.geo_entity.' . $bundle . '.' . $name;
-    $new_display_config = $config_factory->getEditable($new_config_name);
+    $new_display_array = [];
 
     // Get all config keys.
     $keys = array_keys($current_display_config->getRawData());
@@ -99,11 +99,34 @@ class MigrateDisplayModes {
       }
 
       // Set the new config.
-      $new_display_config->set($key, $new_config);
+      $new_display_array[$key] = $new_config;
     }
 
     // Save the new display mode config.
-    $new_display_config->save();
+    // If this is an existing display mode config, its ok to copy it over.
+    // However if it is a new display, create a new display entitiy so a
+    // UUID is generated.
+    $geo_display_name = 'geo_entity.' . $bundle . '.' . $name;
+    $has_existing_display = FALSE;
+    if ($type == 'view') {
+      $has_existing_display = EntityViewDisplay::load($geo_display_name) instanceof EntityViewDisplay;
+    }
+    elseif ($type == 'form') {
+      $has_existing_display = EntityFormDisplay::load($geo_display_name) instanceof EntityFormDisplay;
+    }
+    if ($has_existing_display) {
+      $new_display_config = $config_factory->getEditable($new_config_name);
+      foreach ($new_display_array as $key => $value) {
+        $new_display_config->set($key, $value);
+      }
+      $new_display_config->save();
+    }
+    elseif ($type == 'view') {
+      EntityViewDisplay::create($new_display_array)->save();
+    }
+    elseif ($type == 'form') {
+      EntityFormDisplay::create($new_display_array)->save();
+    }
   }
 
   /**
@@ -137,7 +160,6 @@ class MigrateDisplayModes {
     $current_base_display_mode_config = $config_factory->get($current_base_display_mode_name);
 
     // Load existing new base display mode.
-    $new_base_display_mode_name = 'core.entity_' . $type . '_mode.geo_entity.' . $name;
     if ($type == 'view') {
       $new_base_display_mode = EntityViewMode::load('geo_entity.' . $name);
     }
@@ -147,7 +169,6 @@ class MigrateDisplayModes {
 
     // Only perform the migration if the new base display does not exist.
     if (!$new_base_display_mode instanceof EntityViewMode && !$new_base_display_mode instanceof EntityFormMode) {
-      $new_base_display_mode_config = $config_factory->getEditable($new_base_display_mode_name);
       $base_keys = array_keys($current_base_display_mode_config->getRawData());
 
       // Loop through and set the new display config.
@@ -184,11 +205,17 @@ class MigrateDisplayModes {
         }
 
         // Set the new config.
-        $new_base_display_mode_config->set($base_key, $new_base_config);
+        $new_base_array[$base_key] = $new_base_config;
       }
 
-      // Save the new display mode config.
-      $new_base_display_mode_config->save();
+      // Save the new display mode config by creating a new entity,
+      // this will generate a new UUID.
+      if ($type == 'view') {
+        EntityViewMode::create($new_base_array)->save();
+      }
+      elseif ($type == 'form') {
+        EntityFormMode::create($new_base_array)->save();
+      }
 
     }
   }
