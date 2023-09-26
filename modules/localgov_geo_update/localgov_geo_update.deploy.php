@@ -24,11 +24,21 @@ function localgov_geo_update_deploy_geo_entity_conversion(array &$sandbox) {
   // Try to update 25 entities at a time.
   $ids = array_slice($sandbox['ids'], $sandbox['progress'], 25);
 
-  foreach ($storage->loadMultiple($ids) as $entity) {
-    $geo = GeoEntity::create($entity->toArray());
+  $geocoder_config = Drupal::service('config.factory')->getEditable('geocoder.settings');
+  $orig_geocoder_presave_setting = $geocoder_config->get('geocoder_presave_disabled');
+  if ($orig_geocoder_presave_setting === FALSE) {
+    $geocoder_config->set('geocoder_presave_disabled', TRUE)->save();
+  }
+
+  foreach ($storage->loadMultiple($ids) as $localgov_geo_entity) {
+    $geo = GeoEntity::create($localgov_geo_entity->toArray());
     $geo->save();
-    $entity->delete();
+    $localgov_geo_entity->delete();
     $sandbox['progress']++;
+  }
+
+  if ($orig_geocoder_presave_setting === FALSE) {
+    $geocoder_config->set('geocoder_presave_disabled', FALSE)->save();
   }
 
   // Try to update the percentage but avoid division by zero.
