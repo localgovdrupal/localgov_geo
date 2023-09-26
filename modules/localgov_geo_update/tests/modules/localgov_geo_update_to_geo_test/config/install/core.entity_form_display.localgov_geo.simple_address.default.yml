@@ -1,0 +1,20 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.localgov_geo.simple_address.postal_address
+    - localgov_geo.localgov_geo_type.simple_address
+id: localgov_geo.simple_address.default
+targetEntityType: localgov_geo
+bundle: simple_address
+mode: default
+content:
+  postal_address:
+    type: localgov_geo_address
+    weight: 0
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+hidden:
+  external_id: true
+  label: true

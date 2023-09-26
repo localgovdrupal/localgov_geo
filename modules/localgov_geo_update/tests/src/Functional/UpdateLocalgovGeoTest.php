@@ -194,6 +194,16 @@ class UpdateLocalgovGeoTest extends BrowserTestBase {
     $this->assertInstanceOf(EntityFormMode::class, $label_form_base_mode);
     $this->assertNotEmpty($label_form_view->get('uuid'));
     $this->assertNotEmpty($label_form_base_mode->get('uuid'));
+
+    // Check that a geo with the localgov_address field has migrated.
+    // Since this will have migrated with the remainder of the displays it
+    // should be present so we can load it directly and check which field widget
+    // plugin it is using.
+    $simple_address_form_view = EntityFormDisplay::load('geo_entity.simple_address.default');
+    $form_display_fields = $simple_address_form_view->get('content');
+    // var_dump($form_display_fields);
+    // $this->drupalGet('admin/content/geo/add/simple_address');
+    $this->assertEquals('geo_entity_address', $form_display_fields['postal_address']['type']);
   }
 
 }

@@ -98,6 +98,16 @@ class MigrateDisplayModes {
         $new_config = 'geo_entity';
       }
 
+      // Since some of the fields config may have localgov_geo field types,
+      // these will need to be migrated to geo_entity equivalents.
+      if (is_array($new_config)) {
+        foreach ($new_config as $new_config_sub_key => $new_config_sub_value) {
+          if (!empty($new_config_sub_value['type'])) {
+            $new_config[$new_config_sub_key]['type'] = str_replace('localgov_geo_', 'geo_entity_', $new_config_sub_value['type']);
+          }
+        }
+      }
+
       // Set the new config.
       $new_display_array[$key] = $new_config;
     }
