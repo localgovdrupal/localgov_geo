@@ -70,6 +70,8 @@ function localgov_geo_update_update_8002() {
     // Ensure properties on geo_entity type are the same.
     $geo_type = $geo_storage->load($localgov_type->id());
     $geo_type_values = $localgov_type->toArray();
+    unset($geo_type_values['uuid']);
+    unset($geo_type_values['_core']);
     if (!empty($geo_type_values['label_token'])) {
       // Updated token.
       $geo_type_values['label_token'] = str_replace('localgov_geo', 'geo_entity', $geo_type_values['label_token']);
@@ -79,9 +81,7 @@ function localgov_geo_update_update_8002() {
     }
     else {
       foreach ($geo_type_values as $property => $value) {
-        if (!in_array($property, ['uuid', '_core'])) {
-          $geo_type->set($property, $value);
-        }
+        $geo_type->set($property, $value);
       }
     }
     $geo_type->save();
