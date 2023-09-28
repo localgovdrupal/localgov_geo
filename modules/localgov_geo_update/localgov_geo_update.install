@@ -36,7 +36,7 @@ function localgov_geo_update_update_8001() {
   $update_state = \Drupal::state()->get('localgov_geo_update.run', NULL);
   if (is_null($update_state)) {
     $sync = \Drupal::service('config.storage.sync')->read('core.extension');
-    $sync_modules = array_keys($sync['module']);
+    $sync_modules = array_keys($sync['module'] ?? []);
     if (count(array_intersect($sync_modules, array_keys($enabled))) == count($enabled)) {
       $update_state = TRUE;
       \Drupal::state()->set('localgov_geo_update.run', $update_state);
