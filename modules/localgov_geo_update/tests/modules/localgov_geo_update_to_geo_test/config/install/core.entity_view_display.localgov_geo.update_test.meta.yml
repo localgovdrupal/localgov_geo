@@ -1,0 +1,31 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.localgov_geo.meta
+    - field.field.localgov_geo.update_test.localgov_update_test_details
+    - field.field.localgov_geo.update_test.localgov_update_test_id
+    - field.field.localgov_geo.update_test.location
+    - localgov_geo.localgov_geo_type.update_test
+  module:
+    - leaflet
+    - text
+id: localgov_geo.update_test.meta
+targetEntityType: localgov_geo
+bundle: update_test
+mode: meta
+content:
+  localgov_update_test_details:
+    type: text_default
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 1
+    region: content
+hidden:
+  localgov_update_test_id: true
+  location: true
+  created: true
+  search_api_excerpt: true
+  status: true
+  uid: true

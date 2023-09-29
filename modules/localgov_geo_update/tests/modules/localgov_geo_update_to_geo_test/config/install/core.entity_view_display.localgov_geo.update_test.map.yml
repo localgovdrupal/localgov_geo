@@ -1,0 +1,33 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.localgov_geo.map
+    - field.field.localgov_geo.update_test.localgov_update_test_details
+    - field.field.localgov_geo.update_test.localgov_update_test_id
+    - field.field.localgov_geo.update_test.location
+    - localgov_geo.localgov_geo_type.update_test
+  module:
+    - leaflet
+    - text
+id: localgov_geo.update_test.map
+targetEntityType: localgov_geo
+bundle: update_test
+mode: map
+content:
+  location:
+    type: geofield_default
+    label: hidden
+    settings:
+      output_format: wkt
+      output_escape: true
+    third_party_settings: {  }
+    weight: 0
+    region: content
+hidden:
+  localgov_update_test_details: true
+  localgov_update_test_id: true
+  created: true
+  search_api_excerpt: true
+  status: true
+  uid: true

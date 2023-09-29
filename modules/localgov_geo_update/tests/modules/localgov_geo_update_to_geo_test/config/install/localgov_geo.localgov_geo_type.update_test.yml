@@ -1,0 +1,6 @@
+langcode: en
+status: true
+dependencies: {  }
+id: update_test
+label: 'Parking zone'
+label_token: 'Parking Zone [localgov_geo:localgov_update_test_id]'

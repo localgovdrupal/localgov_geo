@@ -1,0 +1,33 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_form_mode.localgov_geo.label
+    - field.field.localgov_geo.update_test.localgov_update_test_details
+    - field.field.localgov_geo.update_test.localgov_update_test_id
+    - field.field.localgov_geo.update_test.location
+    - localgov_geo.localgov_geo_type.update_test
+  module:
+    - geofield
+    - text
+id: localgov_geo.update_test.label
+targetEntityType: localgov_geo
+bundle: update_test
+mode: label
+content:
+  localgov_update_test_id:
+    type: string_textfield
+    weight: 27
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+
+hidden:
+  label: true
+  created: true
+  status: true
+  uid: true
+  location: true
+  localgov_update_test_details: true

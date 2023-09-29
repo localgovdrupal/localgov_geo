@@ -1,0 +1,18 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.localgov_geo.localgov_update_test_id
+    - localgov_geo.localgov_geo_type.update_test
+id: localgov_geo.update_test.localgov_update_test_id
+field_name: localgov_update_test_id
+entity_type: localgov_geo
+bundle: update_test
+label: 'Zone ID'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

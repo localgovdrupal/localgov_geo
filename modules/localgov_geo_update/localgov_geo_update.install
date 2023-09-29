@@ -10,6 +10,7 @@ use Drupal\field\FieldConfigInterface;
 use Drupal\field\FieldStorageConfigInterface;
 use Drupal\geo_entity\Entity\GeoEntity;
 use Drupal\geo_entity\Entity\GeoEntityType;
+use Drupal\localgov_geo_update\MigrateDisplayModes;
 use Drupal\views\Entity\View;
 
 /**
@@ -18,31 +19,59 @@ use Drupal\views\Entity\View;
 function localgov_geo_update_update_8001() {
   $enabled = [];
   $module_handler = \Drupal::service('module_handler');
-  $module_installer = \Drupal::service('module_installer');
-  $module_installer->install(['geo_entity']);
-  $enabled[] = \t('Geo entity');
+  $enabled['geo_entity'] = \t('Geo entity');
   if ($module_handler->moduleExists('localgov_geo_address')) {
-    $module_installer->install(['geo_entity_address']);
-    $enabled[] = \t('Geo entity: address');
+    $enabled['geo_entity_address'] = \t('Geo entity: address');
   }
   if ($module_handler->moduleExists('localgov_geo_area')) {
-    $module_installer->install(['geo_entity_area']);
-    $enabled[] = \t('Geo entity: area');
+    $enabled['geo_entity_area'] = \t('Geo entity: area');
   }
 
-  return t("Enabled @modules.", ['@modules' => implode(', ', $enabled)]);
+  // Have the localgov_geo_update updates run on an another environment and
+  // been exported to config sync that is going to be imported?
+  // If you want to force a value, to run or not, set the state before running
+  // this update.
+  //
+  // @see https://github.com/localgovdrupal/localgov_geo/issues/91
+  $update_state = \Drupal::state()->get('localgov_geo_update.run', NULL);
+  if (is_null($update_state)) {
+    $sync = \Drupal::service('config.storage.sync')->read('core.extension');
+    $sync_modules = array_keys($sync['module'] ?? []);
+    if (count(array_intersect($sync_modules, array_keys($enabled))) == count($enabled)) {
+      $update_state = TRUE;
+      \Drupal::state()->set('localgov_geo_update.run', $update_state);
+    }
+  }
+
+  if ($update_state !== TRUE) {
+    $module_installer = \Drupal::service('module_installer');
+    $module_installer->install(array_keys($enabled));
+    return t("Enabled @modules.", ['@modules' => implode(', ', $enabled)]);
+  }
+  else {
+    return t("Skipping LocalGov Geo Updates:
+      It is detected you have already run these and exported configuration to config sync.
+      Run config import and the new configuration will be on this instance also.
+      If you are using drush deploy the localgov geo entities will be updated too.
+      If you are manually deploying after importing configuration run drush deploy:hook");
+  }
 }
 
 /**
  * Ensure equivalent geo_entity bundles to localgov_geo.
  */
 function localgov_geo_update_update_8002() {
+  if (\Drupal::state()->get('localgov_geo_update.run', FALSE)) {
+    return t('Skipped: See message localgov_geo_update_update_8001.');
+  }
   $localgov_storage = \Drupal::entityTypeManager()->getStorage('localgov_geo_type');
   $geo_storage = \Drupal::entityTypeManager()->getStorage('geo_entity_type');
   foreach ($localgov_storage->loadMultiple() as $localgov_type) {
     // Ensure properties on geo_entity type are the same.
     $geo_type = $geo_storage->load($localgov_type->id());
     $geo_type_values = $localgov_type->toArray();
+    unset($geo_type_values['uuid']);
+    unset($geo_type_values['_core']);
     if (!empty($geo_type_values['label_token'])) {
       // Updated token.
       $geo_type_values['label_token'] = str_replace('localgov_geo', 'geo_entity', $geo_type_values['label_token']);
@@ -52,9 +81,7 @@ function localgov_geo_update_update_8002() {
     }
     else {
       foreach ($geo_type_values as $property => $value) {
-        if (!in_array($property, ['uuid', '_core'])) {
-          $geo_type->set($property, $value);
-        }
+        $geo_type->set($property, $value);
       }
     }
     $geo_type->save();
@@ -65,6 +92,9 @@ function localgov_geo_update_update_8002() {
  * Ensure geo_entity bundles have fields of localgov_geo.
  */
 function localgov_geo_update_update_8003() {
+  if (\Drupal::state()->get('localgov_geo_update.run', FALSE)) {
+    return t('Skipped: See message localgov_geo_update_update_8001.');
+  }
   $field_storage = \Drupal::entityTypeManager()->getStorage('field_storage_config');
   $field_config = \Drupal::entityTypeManager()->getStorage('field_config');
   foreach ($field_storage->loadByProperties(['entity_type' => 'localgov_geo']) as $lgd_field) {
@@ -115,6 +145,9 @@ function localgov_geo_update_update_8003() {
  * Recreate localgov_geo as geo entities.
  */
 function localgov_geo_update_update_8004(&$sandbox) {
+  if (\Drupal::state()->get('localgov_geo_update.run', FALSE)) {
+    return t('Skipped: See message localgov_geo_update_update_8001.');
+  }
   // Set up the batch by retrieving all of the IDs.
   $storage = \Drupal::entityTypeManager()->getStorage('localgov_geo');
   if (!isset($sandbox['progress'])) {
@@ -147,6 +180,9 @@ function localgov_geo_update_update_8004(&$sandbox) {
  * Update reference fields to use geo_entity and its library browser.
  */
 function localgov_geo_update_update_8005() {
+  if (\Drupal::state()->get('localgov_geo_update.run', FALSE)) {
+    return t('Skipped: See message localgov_geo_update_update_8001.');
+  }
   $fields = [];
   $storage = \Drupal::entityTypeManager()->getStorage('field_storage_config');
   foreach ($storage->loadMultiple() as $field) {
@@ -193,14 +229,20 @@ function localgov_geo_update_update_8005() {
  * Update the entity browser library.
  */
 function localgov_geo_update_update_8806() {
+  if (\Drupal::state()->get('localgov_geo_update.run', FALSE)) {
+    return t('Skipped: See message localgov_geo_update_update_8001.');
+  }
   $view = View::load('localgov_geo_library');
-  $view->delete();
+  $view?->delete();
 }
 
 /**
  * Update views fields.
  */
 function localgov_geo_update_update_8807() {
+  if (\Drupal::state()->get('localgov_geo_update.run', FALSE)) {
+    return t('Skipped: See message localgov_geo_update_update_8001.');
+  }
   $views = View::loadMultiple();
   foreach ($views as $view) {
     $altered = FALSE;
@@ -223,5 +265,30 @@ function localgov_geo_update_update_8807() {
       $view->set('display', $displays);
       $view->save();
     }
+  }
+}
+
+/**
+ * Migrate view and form display modes from localgov_geo to geo_entites.
+ */
+function localgov_geo_update_update_8808() {
+  if (\Drupal::state()->get('localgov_geo_update.run', FALSE)) {
+    return t('Skipped: See message localgov_geo_update_update_8001.');
+  }
+  $view_mode_ids = \Drupal::entityTypeManager()->getStorage('entity_view_display')
+    ->getQuery()
+    ->condition('targetEntityType', 'localgov_geo')
+    ->execute();
+  foreach ($view_mode_ids as $view_mode_id) {
+    [$bundle, $name] = array_slice(explode('.', $view_mode_id, 3), 1, 2);
+    MigrateDisplayModes::migrate($bundle, 'view', $name);
+  }
+  $form_mode_ids = \Drupal::entityTypeManager()->getStorage('entity_form_display')
+    ->getQuery()
+    ->condition('targetEntityType', 'localgov_geo')
+    ->execute();
+  foreach ($form_mode_ids as $form_mode_id) {
+    [$bundle, $name] = array_slice(explode('.', $form_mode_id, 3), 1, 2);
+    MigrateDisplayModes::migrate($bundle, 'form', $name);
   }
 }
