@@ -1,0 +1,13 @@
+name: LocalGov Geo Update to Geo test
+description: 'Test update of localgov_geo entity to geo entity'
+type: module
+package: Testing
+core_version_requirement: ^10
+
+dependencies:
+- address:address
+- geofield:geofield
+- geocoder:geocoder
+- geo_entity:geo_entity
+- localgov_geo:localgov_geo
+- localgov_geo:localgov_geo_update
