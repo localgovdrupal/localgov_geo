@@ -6,7 +6,7 @@
     "license": "GPL-2.0-or-later",
     "require": {
         "drupal/geo_entity": "^1.0-beta",
-	"drupal/geofield_map": "^2.66"
+	"drupal/geofield_map": "^3.0"
     },
     "require-dev": {
         "localgovdrupal/localgov_core": "^2.12"
