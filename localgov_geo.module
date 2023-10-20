@@ -31,7 +31,7 @@ function localgov_geo_localgov_roles_default() {
  */
 function localgov_geo_menu_local_actions_alter(&$local_actions) {
 
-  // Rename 'Add geo' to 'Add location'
+  // Rename 'Add geo' to 'Add location'.
   if (isset($local_actions['geo_entity.add_page'])) {
     $local_actions['geo_entity.add_page']['title'] = t('Add location');
   }
