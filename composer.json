@@ -5,8 +5,7 @@
     "homepage": "https://github.com/localgovdrupal/localgov_geo",
     "license": "GPL-2.0-or-later",
     "require": {
-        "drupal/geo_entity": "^1.0-beta",
-	"drupal/geofield_map": "^2.66"
+        "drupal/geo_entity": "^1.0-beta"
     },
     "require-dev": {
         "localgovdrupal/localgov_core": "^2.12"

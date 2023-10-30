@@ -36,7 +36,6 @@ class AddressFormsTest extends BrowserTestBase {
     'geo_entity_address',
     'token',
     'geocoder',
-    'geofield_map',
   ];
 
   /**
@@ -106,8 +105,6 @@ class AddressFormsTest extends BrowserTestBase {
 
     // Saved new enity.
     $assert_session->responseContains(Html::escape("$line_1") . "<br />\n" . Html::Escape($locality) . "<br />\n$post_code");
-    $assert_session->responseContains('52.123456');
-    $assert_session->responseContains('0.987654');
     $assert_session->pageTextContains('New geo');
 
     // Token generated label.
