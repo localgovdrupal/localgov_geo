@@ -5,6 +5,8 @@
  * Provides a geo entity type.
  */
 
+use Drupal\Core\Cache\RefinableCacheableDependencyInterface;
+
 /**
  * Implements hook_localgov_roles_default().
  */
@@ -22,4 +24,72 @@ function localgov_geo_localgov_roles_default() {
       'create geo',
     ],
   ];
+}
+
+/**
+ * Implements hook_menu_local_actions_alter().
+ */
+function localgov_geo_menu_local_actions_alter(&$local_actions) {
+
+  // Rename 'Add geo' to 'Add location'.
+  if (isset($local_actions['geo_entity.add_page'])) {
+    $local_actions['geo_entity.add_page']['title'] = t('Add location');
+  }
+}
+
+/**
+ * Implements hook_menu_local_tasks_alter().
+ */
+function localgov_geo_menu_local_tasks_alter(&$data, $route_name, RefinableCacheableDependencyInterface &$cacheability) {
+
+  // Rename 'Geo' tab to 'Locations'.
+  if (isset($data['tabs'][0]['entity.geo_entity.collection'])) {
+    $data['tabs'][0]['entity.geo_entity.collection']['#link']['title'] = t('Locations');
+  }
+}
+
+/**
+ * Implements hook_preprocess_HOOK() for breadcrumb.
+ */
+function localgov_geo_preprocess_breadcrumb(&$variables) {
+
+  // Change breadcrumb items from 'Geos' to 'Locations'.
+  $route_name = \Drupal::routeMatch()->getRouteName();
+  if ($route_name === 'entity.geo_entity.add_page') {
+    $variables['breadcrumb'][3]['text'] = t('Locations');
+  }
+  elseif ($route_name === 'entity.geo_entity.add_form') {
+    $variables['breadcrumb'][3]['text'] = t('Locations');
+    $variables['breadcrumb'][4]['text'] = t('Add location');
+  }
+}
+
+/**
+ * Implements hook_preprocess_HOOK() for html.
+ */
+function localgov_geo_preprocess_html(&$variables) {
+
+  // Change HTML title tag from 'Geos' to 'Locations'.
+  $route_name = \Drupal::routeMatch()->getRouteName();
+  if ($route_name === 'entity.geo_entity.collection') {
+    $variables['head_title']['title'] = t('Locations');
+  }
+  elseif ($route_name === 'entity.geo_entity.add_page') {
+    $variables['head_title']['title'] = t('Add location');
+  }
+}
+
+/**
+ * Implements hook_preprocess_HOOK() for page_title.
+ */
+function localgov_geo_preprocess_page_title(&$variables) {
+
+  // Change page title tag from 'Geos' to 'Locations'.
+  $route_name = \Drupal::routeMatch()->getRouteName();
+  if ($route_name === 'entity.geo_entity.collection') {
+    $variables['title'] = t('Locations');
+  }
+  elseif ($route_name === 'entity.geo_entity.add_page') {
+    $variables['title'] = t('Add location');
+  }
 }
