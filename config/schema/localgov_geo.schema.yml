@@ -1,0 +1,36 @@
+# Config schema definitions for the localgov_geo module.
+
+# Schema for the localgov_os_places plugin.
+geocoder_provider.configuration.localgov_os_places:
+  type: mapping
+  label: 'Plugin arguments for the LocalGov OS Places plugin'
+  mapping:
+    apiKey:
+      type: string
+      label: 'API key'
+      description: 'As it says on the tin.'
+    genericAddressQueryUrl:
+      type: string
+      label: 'Address lookup URL'
+      description: 'REST API endpoint for address lookup.  Works for both street names and postcodes.'
+    postcodeQueryUrl:
+      type: string
+      label: 'Postcode-based address lookup URL'
+      description: 'REST API endpoint for address lookup by postcode.'
+    throttle:
+      type: mapping
+      label: 'Throttle'
+      nullable: true
+      mapping:
+        period:
+          type: integer
+          label: 'Period'
+          description: 'Period of time for which the number of requests is limited, in seconds.'
+        limit:
+          type: integer
+          label: 'Limit'
+          description: 'Maximum number of requests allowed for the given period.'
+    userAgent:
+      type: string
+      label: 'User agent name'
+      description: 'As it says on the tin.'
