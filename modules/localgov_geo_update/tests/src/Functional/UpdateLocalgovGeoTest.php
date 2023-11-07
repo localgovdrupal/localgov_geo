@@ -44,6 +44,7 @@ class UpdateLocalgovGeoTest extends BrowserTestBase {
     'create geo',
     'edit geo',
     'administer geo types',
+    'access localgov_geo_library entity browser pages',
   ];
 
   /**
@@ -201,9 +202,14 @@ class UpdateLocalgovGeoTest extends BrowserTestBase {
     // plugin it is using.
     $simple_address_form_view = EntityFormDisplay::load('geo_entity.simple_address.default');
     $form_display_fields = $simple_address_form_view->get('content');
-    // var_dump($form_display_fields);
     // $this->drupalGet('admin/content/geo/add/simple_address');
     $this->assertEquals('geo_entity_address', $form_display_fields['postal_address']['type']);
+
+    // Run the entity browser update.
+    localgov_geo_update_update_8809();
+
+    // Check user can access geo entitiy browser.
+    $this->assertTrue($this->adminUser->hasPermission('access geo_entity_library entity browser pages'));
   }
 
 }
