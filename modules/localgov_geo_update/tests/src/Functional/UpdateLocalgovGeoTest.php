@@ -26,11 +26,13 @@ class UpdateLocalgovGeoTest extends BrowserTestBase {
     'system',
     'text',
     'field_ui',
+    'entity_browser',
+    'views',
     'localgov_geo',
     'localgov_geo_update',
-    'localgov_geo_update_to_geo_test',
     'geo_entity',
     'token',
+    'localgov_geo_update_to_geo_test',
   ];
 
   /**
