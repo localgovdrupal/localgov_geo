@@ -11,6 +11,7 @@ use Drupal\field\FieldStorageConfigInterface;
 use Drupal\geo_entity\Entity\GeoEntity;
 use Drupal\geo_entity\Entity\GeoEntityType;
 use Drupal\localgov_geo_update\MigrateDisplayModes;
+use Drupal\user\Entity\Role;
 use Drupal\views\Entity\View;
 
 /**
@@ -290,5 +291,30 @@ function localgov_geo_update_update_8808() {
   foreach ($form_mode_ids as $form_mode_id) {
     [$bundle, $name] = array_slice(explode('.', $form_mode_id, 3), 1, 2);
     MigrateDisplayModes::migrate($bundle, 'form', $name);
+  }
+}
+
+/**
+ * Update permission for the geo entity browser from localgov_geo.
+ *
+ * This grants the access geo_entity_library entity browser permission for roles
+ * which had the access localgov_geo_library entity browser pages permission
+ * during the update, before this permission in stripped as part of the user
+ * role update.
+ *
+ * Note: this only applies to users upgrading from Drupal 9. If you have already
+ * updated you will need to reassign this permission manually.
+ */
+function localgov_geo_update_update_8809() {
+  $role_ids = \Drupal::entityTypeManager()->getStorage('user_role')
+    ->getQuery()
+    ->execute();
+  if (!empty($role_ids)) {
+    $roles = Role::loadMultiple($role_ids);
+    foreach ($roles as $role) {
+      if ($role->hasPermission('access localgov_geo_library entity browser pages')) {
+        $role->grantPermission('access geo_entity_library entity browser pages');
+      }
+    }
   }
 }
