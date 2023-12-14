@@ -34,3 +34,10 @@ geocoder_provider.configuration.localgov_os_places:
       type: string
       label: 'User agent name'
       description: 'As it says on the tin.'
+    apply_local_custodian_code:
+      type: boolean
+      label: 'Apply local authority filter'
+    local_custodian_code:
+      type: integer
+      label: 'Local custodian code'
+      description: 'Code number for a local authority.  See https://osdatahub.os.uk/docs/match/technicalSpecification.  Leave empty or use 0 for country-wide address search.'
