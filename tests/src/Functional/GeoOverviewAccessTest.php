@@ -67,14 +67,14 @@ class GeoOverviewAccessTest extends BrowserTestBase {
   /**
    * A non-admin test user account.
    *
-   * @var \drupal\user\userinterface
+   * @var \Drupal\user\UserInterface
    */
   protected $nonAdminUser;
 
   /**
    * A creator test user account.
    *
-   * @var \drupal\user\userinterface
+   * @var \Drupal\user\UserInterface
    */
   protected $creatorUser;
 
