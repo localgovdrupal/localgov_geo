@@ -15,6 +15,19 @@ use Drupal\user\Entity\Role;
 use Drupal\views\Entity\View;
 
 /**
+ * Implements hook_update_dependencies().
+ */
+function localgov_geo_update_update_dependencies() {
+
+  // Address updates need to run before any Geos are recreated.
+  $dependencies['localgov_geo_update'][8001] = [
+    'address' => 9201,
+  ];
+
+  return $dependencies;
+}
+
+/**
  * Ensure geo_entity modules enabled.
  */
 function localgov_geo_update_update_8001() {
