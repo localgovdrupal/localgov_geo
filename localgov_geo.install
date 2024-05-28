@@ -11,6 +11,13 @@ use Drupal\user\RoleInterface;
  * Implements hook_install().
  */
 function localgov_geo_install() {
+  // When permissions are set the PermissionHandler rebuilds the permissions.
+  // This causes the filter module should it be enabled to create a url from
+  // one of its paths https://git.drupalcode.org/project/drupal/-/blob/81ff548f6ff6e819b111fe99537b566f25f80c4f/core/modules/filter/src/FilterPermissions.php#L56
+  // If this module and filter module are being enabled in the same
+  // ModuleInstaller call, as happens at least in some tests, the route while
+  // declared is not yet in the route cache.
+  \Drupal::service('router.builder')->rebuild();
   // So node.module says don't do this. Media then just does it.
   // Working assumption here is that exposing geo information is the intention.
   // Otherwise we could push this into the localgov profile. However, it not
