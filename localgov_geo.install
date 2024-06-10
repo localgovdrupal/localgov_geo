@@ -41,8 +41,8 @@ function localgov_geo_update_last_removed() {
 }
 
 /**
- * Grant 'access geo_entity_library entity browser pages' permission to editor,
- * author and contributor roles.
+ * Grant 'create geo' and 'access geo_entity_library entity browser pages'
+ * permissions to Editor, Author and Contributor roles.
  *
  * @throws \Drupal\Core\Entity\EntityStorageException
  */
