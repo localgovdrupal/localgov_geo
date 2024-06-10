@@ -5,6 +5,8 @@
  * Install, update and uninstall functions for the localgov_geo module.
  */
 
+use Drupal\localgov_roles\RolesHelper;
+use Drupal\user\Entity\Role;
 use Drupal\user\RoleInterface;
 
 /**
@@ -36,4 +38,24 @@ function localgov_geo_install() {
 function localgov_geo_update_last_removed() {
   // Removed all pre-Drupal 10 hooks that updated things now in geo_entity.
   return 8810;
+}
+
+/**
+ * Grant 'access geo_entity_library entity browser pages' permission to editor,
+ * author and contributor roles.
+ *
+ * @throws \Drupal\Core\Entity\EntityStorageException
+ */
+function localgov_geo_update_10001() {
+  $roles = Role::loadMultiple([
+    RolesHelper::EDITOR_ROLE,
+    RolesHelper::AUTHOR_ROLE,
+    RolesHelper::CONTRIBUTOR_ROLE,
+  ]);
+
+  foreach ($roles as $role) {
+    $role->grantPermission('create geo');
+    $role->grantPermission('access geo_entity_library entity browser pages');
+    $role->save();
+  }
 }
