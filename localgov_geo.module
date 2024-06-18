@@ -25,6 +25,11 @@ function localgov_geo_localgov_roles_default() {
       'create geo',
       'access geo_entity_library entity browser pages',
     ],
+    // @codingStandardsIgnoreLine
+    \Drupal\localgov_roles\RolesHelper::CONTRIBUTOR_ROLE => [
+      'create geo',
+      'access geo_entity_library entity browser pages',
+    ],
   ];
 }
 
