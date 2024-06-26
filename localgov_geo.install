@@ -49,16 +49,10 @@ function localgov_geo_update_last_removed() {
  */
 function localgov_geo_update_10001() {
 
-  // Check if we have localgov_roles enabled, if not, bow out.
-  $moduleHandler = \Drupal::service('module_handler');
-  if (!$moduleHandler->moduleExists('localgov_roles')) {
-    return;
-  }
-
   $roles = Role::loadMultiple([
-    RolesHelper::EDITOR_ROLE,
-    RolesHelper::AUTHOR_ROLE,
-    RolesHelper::CONTRIBUTOR_ROLE,
+    'localgov_editor',
+    'localgov_author',
+    'localgov_contributor',
   ]);
 
   foreach ($roles as $role) {
