@@ -327,6 +327,7 @@ function localgov_geo_update_update_8809() {
     foreach ($roles as $role) {
       if ($role->hasPermission('access localgov_geo_library entity browser pages')) {
         $role->grantPermission('access geo_entity_library entity browser pages');
+        $role->save();
       }
     }
   }
