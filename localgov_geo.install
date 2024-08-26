@@ -11,7 +11,10 @@ use Drupal\user\RoleInterface;
 /**
  * Implements hook_install().
  */
-function localgov_geo_install() {
+function localgov_geo_install($is_syncing) {
+  if ($is_syncing) {
+    return;
+  }
   // When permissions are set the PermissionHandler rebuilds the permissions.
   // This causes the filter module should it be enabled to create a url from
   // one of its paths https://git.drupalcode.org/project/drupal/-/blob/81ff548f6ff6e819b111fe99537b566f25f80c4f/core/modules/filter/src/FilterPermissions.php#L56
