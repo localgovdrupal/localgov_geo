@@ -2,12 +2,12 @@
 
 namespace Drupal\localgov_geo_update_to_geo_test\Element;
 
-use Drupal\address\Element\Address;
 use Drupal\Component\Utility\Crypt;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Render\BubbleableMetadata;
 use Drupal\Core\Site\Settings;
 use Drupal\Core\Url;
+use Drupal\address\Element\Address;
 
 /**
  * Extends the address element to add autocomplete.

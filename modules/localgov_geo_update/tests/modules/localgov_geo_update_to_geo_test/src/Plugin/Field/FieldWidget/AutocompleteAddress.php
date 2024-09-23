@@ -2,11 +2,11 @@
 
 namespace Drupal\localgov_geo_update_to_geo_test\Plugin\Field\FieldWidget;
 
-use Drupal\address\Plugin\Field\FieldWidget\AddressDefaultWidget;
 use Drupal\Core\Entity\EntityFieldManagerInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\address\Plugin\Field\FieldWidget\AddressDefaultWidget;
 use Drupal\geocoder\Entity\GeocoderProvider;
 use Drupal\geocoder\ProviderPluginManager;
 use Symfony\Component\DependencyInjection\ContainerInterface;
