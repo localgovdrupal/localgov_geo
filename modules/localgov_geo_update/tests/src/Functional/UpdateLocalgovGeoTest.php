@@ -6,11 +6,11 @@ use Drupal\Core\Entity\Entity\EntityFormDisplay;
 use Drupal\Core\Entity\Entity\EntityFormMode;
 use Drupal\Core\Entity\Entity\EntityViewDisplay;
 use Drupal\Core\Entity\Entity\EntityViewMode;
+use Drupal\Tests\BrowserTestBase;
 use Drupal\geo_entity\Entity\GeoEntity;
 use Drupal\geo_entity\Entity\GeoEntityType;
 use Drupal\localgov_geo_update\Entity\LocalgovGeo;
 use Drupal\localgov_geo_update\MigrateDisplayModes;
-use Drupal\Tests\BrowserTestBase;
 
 /**
  * Updates a localgov geo entity and checks fields and display works.

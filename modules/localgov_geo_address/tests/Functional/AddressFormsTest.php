@@ -3,8 +3,8 @@
 namespace Drupal\Tests\localgov_geo_address\Functional;
 
 use Drupal\Component\Utility\Html;
-use Drupal\geo_entity\Entity\GeoEntity;
 use Drupal\Tests\BrowserTestBase;
+use Drupal\geo_entity\Entity\GeoEntity;
 
 /**
  * Ensures that localgov_geo UI works.

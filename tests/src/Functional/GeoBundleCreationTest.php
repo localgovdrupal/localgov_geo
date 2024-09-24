@@ -2,8 +2,8 @@
 
 namespace Drupal\Tests\localgov_geo\Functional;
 
-use Drupal\geo_entity\Entity\GeoEntityType;
 use Drupal\Tests\BrowserTestBase;
+use Drupal\geo_entity\Entity\GeoEntityType;
 
 /**
  * Ensures that localgov_geo UI works.
