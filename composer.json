@@ -5,7 +5,7 @@
     "homepage": "https://github.com/localgovdrupal/localgov_geo",
     "license": "GPL-2.0-or-later",
     "require": {
-        "drupal/geo_entity": "dev-d11 as 1.0.2"
+        "drupal/geo_entity": "dev-3493603-drupal-11-support as 1.0.2"
     },
     "require-dev": {
         "localgovdrupal/localgov_core": "dev-fix/2.x/246-drupal-11-support as 2.13.11"
