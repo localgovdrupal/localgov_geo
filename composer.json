@@ -5,10 +5,10 @@
     "homepage": "https://github.com/localgovdrupal/localgov_geo",
     "license": "GPL-2.0-or-later",
     "require": {
-        "drupal/geo_entity": "dev-d11"
+        "drupal/geo_entity": "dev-d11 as 1.0.2"
     },
     "require-dev": {
-        "localgovdrupal/localgov_core": "dev-fix/2.x/246-drupal-11-support"
+        "localgovdrupal/localgov_core": "dev-fix/2.x/246-drupal-11-support as 2.13.11"
     },
     "suggest": {
         "localgovdrupal/localgov_os_places_geocoder_provider": "1.x-dev"
