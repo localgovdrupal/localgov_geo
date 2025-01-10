@@ -2,7 +2,7 @@ name: LocalGov Geo Update to Geo test
 description: 'Test update of localgov_geo entity to geo entity'
 type: module
 package: Testing
-core_version_requirement: ^10
+core_version_requirement: ^10 || ^11
 
 dependencies:
 - address:address
