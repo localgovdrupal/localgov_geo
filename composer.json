@@ -12,18 +12,5 @@
     },
     "suggest": {
         "localgovdrupal/localgov_os_places_geocoder_provider": "1.x-dev"
-    },
-    "extra": {
-        "patches": {
-            "drupal/geofield": {
-                "Nullable types must be explicit": "https://git.drupalcode.org/project/geofield/-/commit/12d1628972669c83e501a3ec9184ae3ad870b58e.diff"
-            },
-            "drupal/leaflet": {
-                "Issue #3498789: Update method signatures to not implicitly": "https://git.drupalcode.org/issue/leaflet-3498789/-/commit/a855540e0bc5080e0d9647133f08f80089b3a773.patch"
-            },
-            "commerceguys/addressing": {
-                "Switch implicit nullable types to explict": "https://github.com/commerceguys/addressing/commit/e0fb42455a9a94b7f7f173d530394b420ab5df35.patch"
-            }
-        }
     }
 }
