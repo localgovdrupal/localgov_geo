@@ -2,6 +2,6 @@ name: LocalGov Geo Area
 type: module
 description: 'Geo bundle for storing polygons.'
 package: LocalGov Drupal
-core_version_requirement: ^9 || ^10
+core_version_requirement: ^10 || ^11
 dependencies:
   - geo_entity:geo_entity_area
