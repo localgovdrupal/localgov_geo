@@ -54,9 +54,9 @@ class RolesIntegrationTest extends KernelTestBase {
         ['editor' => TRUE, 'author' => FALSE],
       'create geo' =>
         ['editor' => TRUE, 'author' => TRUE],
-      'delete geo' =>
+      'delete any geo' =>
         ['editor' => TRUE, 'author' => FALSE],
-      'edit geo' =>
+      'edit any geo' =>
         ['editor' => TRUE, 'author' => FALSE],
     ];
 
