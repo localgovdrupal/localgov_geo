@@ -4,8 +4,14 @@
     "description": "LocalGov Drupal Geo integration",
     "homepage": "https://github.com/localgovdrupal/localgov_geo",
     "license": "GPL-2.0-or-later",
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://git.drupalcode.org/issue/geo_entity-3532779/"
+        },
+    ],
     "require": {
-        "drupal/geo_entity": "^1.0"
+        "drupal/geo_entity": "dev-3532779-schema-errors as 1.1.1"
     },
     "require-dev": {
         "localgovdrupal/localgov_core": "^2.13"
