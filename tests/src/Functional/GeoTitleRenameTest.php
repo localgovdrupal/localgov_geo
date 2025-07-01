@@ -41,9 +41,9 @@ class GeoTitleRenameTest extends BrowserTestBase {
 
     $user = $this->drupalCreateUser([
       'access geo overview',
-      'delete geo',
+      'delete any geo',
       'create geo',
-      'edit geo',
+      'edit any geo',
       'administer geo types',
     ]);
     $this->drupalLogin($user);

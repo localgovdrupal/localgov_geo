@@ -29,9 +29,9 @@ class GeoOverviewAccessTest extends BrowserTestBase {
    */
   protected static $adminUserPermissions = [
     'access geo overview',
-    'delete geo',
+    'delete any geo',
     'create geo',
-    'edit geo',
+    'edit any geo',
     'administer geo types',
   ];
 
@@ -43,8 +43,8 @@ class GeoOverviewAccessTest extends BrowserTestBase {
   protected static $nonAdminUserPermissions = [
     'access geo overview',
     'create geo',
-    'edit geo',
-    'delete geo',
+    'edit any geo',
+    'delete any geo',
   ];
 
   /**
@@ -54,7 +54,7 @@ class GeoOverviewAccessTest extends BrowserTestBase {
    */
   protected static $creatorUserPermissions = [
     'create geo',
-    'edit geo',
+    'edit any geo',
   ];
 
   /**
