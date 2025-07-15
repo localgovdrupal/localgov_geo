@@ -44,9 +44,9 @@ class AddressFormsTest extends BrowserTestBase {
    * @var array
    */
   protected static $adminUserPermissions = [
-    'delete geo',
+    'delete any geo',
     'create geo',
-    'edit geo',
+    'edit any geo',
   ];
 
   /**
