@@ -1,16 +1,16 @@
 {
-    "name": "localgovdrupal/localgov_geo",
+    "name": "drupal/localgov_geo",
     "type": "drupal-module",
     "description": "LocalGov Drupal Geo integration",
-    "homepage": "https://github.com/localgovdrupal/localgov_geo",
+    "homepage": "https://www.drupal.org/project/localgov_geo",
     "license": "GPL-2.0-or-later",
     "require": {
         "drupal/geo_entity": "^1.0"
     },
     "require-dev": {
-        "localgovdrupal/localgov_core": "^2.13"
+        "drupal/localgov_core": "^2.13"
     },
     "suggest": {
-        "localgovdrupal/localgov_os_places_geocoder_provider": "1.x-dev"
+        "drupal/localgov_os_places_geocoder_provider": "1.x-dev"
     }
 }
